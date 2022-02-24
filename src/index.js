@@ -1,6 +1,8 @@
 import './stylesheets/reset.css';
 import './stylesheets/style.sass';
-import { displayCity, todaysWeather, userInput } from './scripts/display';
+import {
+  barMenu, displayCity, todaysWeather, userInput,
+} from './scripts/display';
 import { fetchCity, fetchWeather } from './scripts/apiCalls';
 
 const dataHandler = (() => {
@@ -94,3 +96,5 @@ const locateUser = () => {
 };
 
 locateUser();
+
+barMenu();

@@ -1,4 +1,5 @@
 const content = document.querySelector('main');
+const body = document.querySelector('body');
 
 const displayCity = (str) => {
   const container = document.createElement('div');
@@ -63,7 +64,7 @@ const todaysWeather = (obj, cel = 'c') => {
     </div>
     <div>
       <span>Gusts:</span>
-      <span>${obj.wind_gust}</span>
+      <span>${obj.wind_gust}Km/h</span>
     </div>
   </div>
   <div>
@@ -73,8 +74,24 @@ const todaysWeather = (obj, cel = 'c') => {
 
   content.appendChild(container);
 };
+
+const barMenu = () => {
+  const container = document.createElement('div');
+  container.id = 'bar-menu';
+
+  const unitsButton = document.createElement('button');
+  unitsButton.innerHTML = 'Units';
+
+  unitsButton.addEventListener('click', () => {
+
+  });
+
+  container.appendChild(unitsButton);
+  content.appendChild(container);
+};
 export {
   displayCity,
   userInput,
   todaysWeather,
+  barMenu,
 };
