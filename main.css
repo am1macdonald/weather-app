@@ -157,3 +157,14 @@ main {
   width: 90%;
   background-color: #fffffe;
 }
+
+#bar-menu {
+  position: fixed;
+  bottom: 2vh;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  height: 5vh;
+  width: 95vw;
+  background-color: #fffffe;
+}
