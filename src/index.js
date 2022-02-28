@@ -22,6 +22,8 @@ const dataHandler = (() => {
   const todaysSummary = () => {
     const current = weather.current;
     const summary = {
+      weather: current.weather[0].main,
+      icon: current.weather[0].icon,
       temp: Math.round(current.temp),
       feels_like: Math.round(current.feels_like),
       humidity: current.humidity,
@@ -32,9 +34,14 @@ const dataHandler = (() => {
     return summary;
   };
 
+  const hourly = () => {
+    for (let i = 0; i < 1; i += 1) {
+      console.log(todaysSummary());
+    }
+  };
+
   const setWeather = (obj) => {
     weather = obj;
-    console.log(weather);
   };
 
   const getLocation = () => location;
@@ -60,6 +67,7 @@ const dataHandler = (() => {
     getWeatherObj,
     getLocation,
     todaysSummary,
+    hourly,
   };
 })();
 
@@ -82,6 +90,7 @@ const locateUser = () => {
       .then((val) => {
         dataHandler.setWeather(val);
         todaysWeather(dataHandler.todaysSummary());
+        dataHandler.hourly();
       });
   };
 

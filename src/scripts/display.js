@@ -34,7 +34,7 @@ const userInput = () => {
   content.appendChild(container);
 };
 
-const todaysWeather = (obj, cel = 'c') => {
+const todaysWeather = (obj, temp = 'c', speed = 'Km/h') => {
   // eslint-disable-next-line new-cap
   const dateToday = format(Date.now(), 'PPP');
   console.log(obj);
@@ -45,17 +45,17 @@ const todaysWeather = (obj, cel = 'c') => {
     <h3>${dateToday}</h3>
   </div>
   <div id="icon-temp">
-    <div><img src="#" alt="icon" /></div>
-    <div>${obj.temp}°${cel}</div>
+    <div id="icon-div"><img src="http://openweathermap.org/img/wn/${obj.icon}@2x.png" alt="icon" />${obj.weather.toLowerCase()}</div>
+    <div>${obj.temp}°${temp}</div>
   </div>
   <div id="details">
     <div>
       <span>Temp:</span>
-      <span> ${obj.temp}°${cel}</span>
+      <span> ${obj.temp}°${temp}</span>
     </div>
     <div>
       <span>Feels Like:</span>
-      <span>${obj.feels_like}°${cel}</span>
+      <span>${obj.feels_like}°${temp}</span>
     </div>
     <div>
       <span>Humidity:</span>
@@ -63,18 +63,23 @@ const todaysWeather = (obj, cel = 'c') => {
     </div>
     <div>
       <span>Wind:</span>
-      <span>${obj.wind}Km/h</span>
+      <span>${obj.wind}${speed}</span>
     </div>
     <div>
       <span>Gusts:</span>
-      <span>${obj.wind_gust}Km/h</span>
+      <span>${obj.wind_gust}${speed}</span>
     </div>
   </div>
-  <div>
-    <button>24-hour forecast</button>
-  </div>
-  `;
 
+  `;
+  const buttonDiv = document.createElement('div');
+  const button = document.createElement('button');
+  button.innerHTML = '24-Hour';
+  button.addEventListener('click', () => {
+    console.log('clicked!!');
+  });
+  buttonDiv.appendChild(button);
+  container.appendChild(buttonDiv);
   content.appendChild(container);
 };
 

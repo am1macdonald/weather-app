@@ -95,7 +95,7 @@ main
   & > * 
     width: 100%
 
-    padding-bottom: 2vh
+    margin-bottom: 2vh
 
     button
       width: auto
@@ -107,26 +107,41 @@ main
 
       background-color: $yellow
 
-
-
 #date
   text-align: center
 
 
 #icon-temp
+  position: relative
   display: flex
   justify-content: space-around
   align-items: center
-  
+ 
   div
     width: 50%
     text-align: center
-    font-size: 2rem
+    font-size: 2.5rem
+  
+  #icon-div
+    display: flex
+    flex-direction: column
+    justify-content: space-around
+    align-items: center
+    font-size: 1rem
+
+    &::after
+      content: ""
+      position: absolute
+      right: 50%
+      height: 3rem
+      border-right: 2px solid $dark-green
+
+
 
 #details
   display: grid
-  grid-template-rows: repeat(auto 1fr)
-  height: 15vh
+  grid-template-rows: repeat(auto-fit, 1fr)
+  height: clamp(25%, 500px, 150px)
   width: 90%
 
   border: 2px solid $dark-green
