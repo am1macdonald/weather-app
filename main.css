@@ -125,7 +125,7 @@ main {
 }
 .content-container > * {
   width: 100%;
-  padding-bottom: 2vh;
+  margin-bottom: 2vh;
 }
 .content-container > * button {
   width: auto;
@@ -141,6 +141,7 @@ main {
 }
 
 #icon-temp {
+  position: relative;
   display: flex;
   justify-content: space-around;
   align-items: center;
@@ -148,13 +149,27 @@ main {
 #icon-temp div {
   width: 50%;
   text-align: center;
-  font-size: 2rem;
+  font-size: 2.5rem;
+}
+#icon-temp #icon-div {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  font-size: 1rem;
+}
+#icon-temp #icon-div::after {
+  content: "";
+  position: absolute;
+  right: 50%;
+  height: 3rem;
+  border-right: 2px solid #001e1d;
 }
 
 #details {
   display: grid;
-  grid-template-rows: repeat(auto 1fr);
-  height: 15vh;
+  grid-template-rows: repeat(auto-fit, 1fr);
+  height: clamp(25%, 500px, 150px);
   width: 90%;
   border: 2px solid #001e1d;
   background-color: #fffffe;
