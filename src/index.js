@@ -1,7 +1,10 @@
 import './stylesheets/reset.css';
 import './stylesheets/style.sass';
 import {
-  barMenu, displayCity, todaysWeather, userInput,
+  barMenu,
+  displayCity,
+  todaysWeather,
+  userInput,
 } from './scripts/display';
 import { fetchCity, fetchWeather } from './scripts/apiCalls';
 

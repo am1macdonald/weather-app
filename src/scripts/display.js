@@ -1,5 +1,4 @@
 const content = document.querySelector('main');
-const body = document.querySelector('body');
 
 const displayCity = (str) => {
   const container = document.createElement('div');
