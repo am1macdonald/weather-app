@@ -69,6 +69,8 @@ main
   width: 100vw
 
 .content-container
+  position: relative
+  z-index: 2
   box-sizing: border-box
   display: flex
   flex-direction: column
@@ -76,9 +78,9 @@ main
   align-items: center
 
   height: auto
-  max-height: 80vh
-  width: 90vw
-  padding: 2vh 0
+  height: clamp(330px, 500px, 60vh)
+  width: clamp(250px, 360px, 90vw)
+  padding: 2vmin
 
   margin-top: 2vh
 
@@ -88,10 +90,7 @@ main
 
   color: $dark-green
 
-  &::after
-    position: relative
-    
-    background-color: $dark-green
+  box-shadow: 5px 4px 0px $dark-green
 
   & > * 
     width: 100%
@@ -121,13 +120,35 @@ main
   
   div
     width: 50%
+    text-align: center
+    font-size: 2rem
 
 #details
-    display: grid
-    grid-template-rows: repeat(auto 1fr)
-    height: 15vh
-    width: 90%
-    background-color: $whites
+  display: grid
+  grid-template-rows: repeat(auto 1fr)
+  height: 15vh
+  width: 90%
+
+  border: 2px solid $dark-green
+
+
+  background-color: $whites
+
+  div
+    display: flex
+    justify-content: space-around
+    align-items: center
+
+    & > *
+      width: 50%
+      text-align: center
+
+      &:first-child
+        text-align: right
+      
+
+
+    
 
 #bar-menu
   position: fixed

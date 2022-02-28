@@ -106,23 +106,22 @@ main {
 }
 
 .content-container {
+  position: relative;
+  z-index: 2;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
   height: auto;
-  max-height: 80vh;
-  width: 90vw;
-  padding: 2vh 0;
+  height: clamp(330px, 500px, 60vh);
+  width: clamp(250px, 360px, 90vw);
+  padding: 2vmin;
   margin-top: 2vh;
   border: 5px solid #001e1d;
   background-color: #abd1c6;
   color: #001e1d;
-}
-.content-container::after {
-  position: relative;
-  background-color: #001e1d;
+  box-shadow: 5px 4px 0px #001e1d;
 }
 .content-container > * {
   width: 100%;
@@ -148,6 +147,8 @@ main {
 }
 #icon-temp div {
   width: 50%;
+  text-align: center;
+  font-size: 2rem;
 }
 
 #details {
@@ -155,7 +156,20 @@ main {
   grid-template-rows: repeat(auto 1fr);
   height: 15vh;
   width: 90%;
+  border: 2px solid #001e1d;
   background-color: #fffffe;
+}
+#details div {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+#details div > * {
+  width: 50%;
+  text-align: center;
+}
+#details div > *:first-child {
+  text-align: right;
 }
 
 #bar-menu {

@@ -1,3 +1,5 @@
+import format from 'date-fns/format';
+
 const content = document.querySelector('main');
 
 const displayCity = (str) => {
@@ -33,12 +35,14 @@ const userInput = () => {
 };
 
 const todaysWeather = (obj, cel = 'c') => {
+  // eslint-disable-next-line new-cap
+  const dateToday = format(Date.now(), 'PPP');
   console.log(obj);
   const container = document.createElement('div');
   container.classList.add('content-container');
   container.innerHTML = `
   <div id="date">
-    <h3>Date Today</h3>
+    <h3>${dateToday}</h3>
   </div>
   <div id="icon-temp">
     <div><img src="#" alt="icon" /></div>
