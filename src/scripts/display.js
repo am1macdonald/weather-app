@@ -101,11 +101,11 @@ const todaysWeather = (obj, units) => {
     </div>
     <div>
       <span>Wind:</span>
-      <span>${Number.isNaN(obj.wind) ? '0' : obj.wind}${units.speed}</span>
+      <span>${Number.isNaN(obj.wind) ? '0' : obj.wind} ${units.speed}</span>
     </div>
     <div>
       <span>Gusts:</span>
-      <span>${Number.isNaN(obj.wind_gust) ? '0' : obj.wind_gust}${units.speed}</span>
+      <span>${Number.isNaN(obj.wind_gust) ? '0' : obj.wind_gust} ${units.speed}</span>
     </div>
   </div>
 

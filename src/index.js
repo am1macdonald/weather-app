@@ -27,7 +27,7 @@ const dataHandler = (() => {
       temp: 'f',
     },
     metric: {
-      speed: 'Km/h',
+      speed: 'm/s',
       temp: 'C',
     },
   };
