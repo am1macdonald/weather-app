@@ -60,6 +60,11 @@ table {
   box-sizing: border-box;
 }
 
+button {
+  cursor: pointer;
+  font-family: "Poppins", sans-serif;
+}
+
 h1 {
   font-size: 3rem;
   line-height: 3.5rem;
@@ -73,8 +78,10 @@ h2 {
 }
 
 h3 {
+  text-align: center;
   font-size: 1.8rem;
   line-height: 2rem;
+  color: #001e1d;
 }
 
 body {
@@ -117,7 +124,9 @@ main {
   height: clamp(330px, 500px, 60vh);
   width: clamp(250px, 360px, 90vw);
   padding: 2vmin;
+  padding-bottom: 0;
   margin-top: 2vh;
+  margin-bottom: 7vh;
   border: 5px solid #001e1d;
   background-color: #abd1c6;
   color: #001e1d;
@@ -125,7 +134,7 @@ main {
 }
 .content-container > * {
   width: 100%;
-  margin-bottom: 2vh;
+  margin-bottom: 1vh;
 }
 .content-container > * button {
   width: auto;
@@ -136,7 +145,23 @@ main {
   background-color: #f9bc60;
 }
 
-#date {
+#button-div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+#button-div button {
+  width: auto;
+  height: auto;
+  padding: 0.5rem 1rem;
+  border: none;
+  font-size: 1.5rem;
+  line-height: 1.3rem;
+  text-align: center;
+  background-color: #e16162;
+}
+
+#date-container {
   text-align: center;
 }
 
@@ -187,13 +212,45 @@ main {
   text-align: right;
 }
 
+#search-window {
+  justify-content: space-around;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  text-align: center;
+  color: #001e1d;
+}
+form div {
+  padding-bottom: 3vh;
+}
+form label {
+  text-align: justify;
+  display: inline-block;
+  width: 80%;
+  padding-bottom: 1vh;
+}
+form label + input {
+  width: 80%;
+  height: 1.8rem;
+  line-height: 1.7rem;
+  font-family: "Poppins", sans-serif;
+}
+
 #bar-menu {
   position: fixed;
   bottom: 2vh;
   display: flex;
   justify-content: space-around;
   align-items: center;
-  height: 5vh;
-  width: 95vw;
-  background-color: #fffffe;
+  height: 7vh;
+  width: clamp(250px, 360px, 90vw);
+  border-radius: 2px;
+  background-color: rgba(255, 255, 254, 0.63);
+}
+#bar-menu button {
+  width: 50%;
+  height: inherit;
 }
