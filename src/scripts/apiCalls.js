@@ -37,8 +37,8 @@ const fetchCityName = async (lat, lon) => {
   return data[0];
 };
 
-const fetchWeather = async (lat, lon) => {
-  const result = await fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&appid=${key}&units=metric`, { mode: 'cors' });
+const fetchWeather = async (lat, lon, units = 'metric') => {
+  const result = await fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&appid=${key}&units=${units}`, { mode: 'cors' });
 
   const data = await result.json();
 

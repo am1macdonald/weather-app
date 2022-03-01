@@ -14,12 +14,22 @@ import { fetchCityName, fetchCityData, fetchWeather } from './scripts/apiCalls';
 const dataHandler = (() => {
   let weather = {};
   let location = '';
+  const pos = {
+    lat: '',
+    lon: '',
+  };
 
   let units = 'metric';
 
-  const toggleUnits = () => {
-    units = units === 'metric' ? 'standard' : 'metric';
-    console.log(units);
+  const unitNames = {
+    imperial: {
+      speed: 'mph',
+      temp: 'f',
+    },
+    metric: {
+      speed: 'Km/h',
+      temp: 'C',
+    },
   };
 
   const todaysSummary = () => {
@@ -64,41 +74,38 @@ const dataHandler = (() => {
     }
   };
 
-  const fetchAndRelease = (lat, lon) => {
-    fetchCityName(lat, lon)
-      .then((val) => {
-        setLocation(val);
-        displayCity(getLocation());
-      });
-    fetchWeather(lat, lon)
+  const fetchAndRelease = async () => {
+    fetchWeather(pos.lat, pos.lon, units)
       .then((val) => {
         setWeather(val);
-        todaysWeather(todaysSummary());
+        todaysWeather(todaysSummary(), unitNames[units]);
         hourly();
+        clearAndRenderWeather(todaysSummary(), unitNames[units]);
+        displayCity(getLocation());
       });
   };
 
   const handleFormData = async (cityData) => {
-    const lat = cityData.lat;
-    const lon = cityData.lon;
+    pos.lat = cityData.lat;
+    pos.lon = cityData.lon;
     setLocation(cityData);
-    fetchWeather(lat, lon)
-      .then((val) => {
-        setWeather(val);
-        clearAndRenderWeather(todaysSummary());
-        hourly();
-        displayCity(getLocation());
-      });
+    fetchAndRelease();
   };
 
-  const handlePosition = (position) => {
-    const pos = position;
-    const coords = pos.coords;
-    const lat = coords.latitude;
-    const lon = coords.longitude;
-    console.log('lat & lon: ', lat, ' : ', lon);
+  const handlePosition = async (position) => {
+    pos.lat = position.coords.latitude;
+    pos.lon = position.coords.longitude;
+    fetchCityName(pos.lat, pos.lon)
+      .then((val) => {
+        setLocation(val);
+      });
+    fetchAndRelease();
+  };
 
-    fetchAndRelease(lat, lon);
+  const toggleUnits = () => {
+    units = units === 'metric' ? 'imperial' : 'metric';
+    console.log(unitNames[units]);
+    fetchAndRelease();
   };
 
   return {
@@ -160,15 +167,15 @@ locateUser();
 
   const metricBtn = document.getElementById('metric-button');
 
-  const standardBtn = document.getElementById('standard-button');
+  const imperialBtn = document.getElementById('imperial-button');
 
   metricBtn.addEventListener('click', (e) => {
     dataHandler.toggleUnits();
     e.target.disabled = true;
-    standardBtn.disabled = false;
+    imperialBtn.disabled = false;
   });
 
-  standardBtn.addEventListener('click', (e) => {
+  imperialBtn.addEventListener('click', (e) => {
     dataHandler.toggleUnits();
     e.target.disabled = true;
     metricBtn.disabled = false;

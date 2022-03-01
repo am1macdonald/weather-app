@@ -75,7 +75,7 @@ const userInput = () => {
   content.appendChild(container);
 };
 
-const todaysWeather = (obj, temp = 'c', speed = 'Km/h') => {
+const todaysWeather = (obj, units) => {
   // eslint-disable-next-line new-cap
   console.log(obj);
   const container = document.createElement('div');
@@ -84,16 +84,16 @@ const todaysWeather = (obj, temp = 'c', speed = 'Km/h') => {
   container.insertAdjacentHTML('beforeend', `
   <div id="icon-temp">
     <div id="icon-div"><img src="http://openweathermap.org/img/wn/${obj.icon}@2x.png" alt="icon" />${obj.weather.toLowerCase()}</div>
-    <div>${obj.temp}°${temp}</div>
+    <div>${obj.temp}°${units.temp}</div>
   </div>
   <div id="details">
     <div>
       <span>Temp:</span>
-      <span> ${obj.temp}°${temp}</span>
+      <span> ${obj.temp}°${units.temp}</span>
     </div>
     <div>
       <span>Feels Like:</span>
-      <span>${obj.feels_like}°${temp}</span>
+      <span>${obj.feels_like}°${units.temp}</span>
     </div>
     <div>
       <span>Humidity:</span>
@@ -101,11 +101,11 @@ const todaysWeather = (obj, temp = 'c', speed = 'Km/h') => {
     </div>
     <div>
       <span>Wind:</span>
-      <span>${Number.isNaN(obj.wind) ? '0' : obj.wind}${speed}</span>
+      <span>${Number.isNaN(obj.wind) ? '0' : obj.wind}${units.speed}</span>
     </div>
     <div>
       <span>Gusts:</span>
-      <span>${Number.isNaN(obj.wind_gust) ? '0' : obj.wind_gust}${speed}</span>
+      <span>${Number.isNaN(obj.wind_gust) ? '0' : obj.wind_gust}${units.speed}</span>
     </div>
   </div>
 
@@ -121,9 +121,9 @@ const todaysWeather = (obj, temp = 'c', speed = 'Km/h') => {
   container.appendChild(buttonDiv);
   content.appendChild(container);
 };
-const clearAndRenderWeather = (obj) => {
+const clearAndRenderWeather = (obj, units) => {
   content.innerHTML = '';
-  todaysWeather(obj);
+  todaysWeather(obj, units);
 };
 const barMenu = () => {
   const container = document.createElement('div');
@@ -136,13 +136,13 @@ const barMenu = () => {
   metricBtn.innerHTML = 'metric';
   metricBtn.disabled = true;
 
-  const standardBtn = document.createElement('button');
-  standardBtn.id = 'standard-button';
-  standardBtn.innerHTML = 'standard';
+  const imperialBtn = document.createElement('button');
+  imperialBtn.id = 'imperial-button';
+  imperialBtn.innerHTML = 'imperial';
 
   container.appendChild(metricBtn);
 
-  container.appendChild(standardBtn);
+  container.appendChild(imperialBtn);
   body.appendChild(container);
 };
 export {
