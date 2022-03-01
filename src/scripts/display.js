@@ -1,13 +1,9 @@
 import format from 'date-fns/format';
 
+const content = document.querySelector('main');
+const body = document.querySelector('body');
+
 const displayManager = (() => {
-  let units = 'metric';
-
-  const toggleUnits = () => {
-    units = units === 'metric' ? 'standard' : 'metric';
-    console.log(units);
-  };
-
   let state = '';
 
   const setState = () => {
@@ -17,20 +13,19 @@ const displayManager = (() => {
   const getState = () => state;
 
   return {
-    toggleUnits,
     setState,
     getState,
   };
 })();
 
-const content = document.querySelector('main');
-
 const displayCity = (str) => {
   const container = document.createElement('div');
   container.id = 'city-container';
 
+  const trunc = (str.length > 25) ? `${str.substr(0, 25 - 1)}...` : str;
+
   container.innerHTML = `
-  <h2>${str}</h2>
+  <h2>${trunc}</h2>
   `;
 
   content.prepend(container);
@@ -48,6 +43,7 @@ const displayDateToday = (parent) => {
 };
 
 const userInput = () => {
+  const regex = "[a-zA-Z.'-]+( [a-zA-Z.'-]+)*";
   const container = document.createElement('div');
   container.id = 'search-window';
   container.classList.add('content-container');
@@ -58,17 +54,17 @@ const userInput = () => {
     <div>
       <label for="city">city</label>
       <input id="city" type="text" required 
-      pattern="^[A-z]+$"/>
+      pattern="${regex}"/>
     </div>
     <div>
       <label for="state">state</label>
-      <input id="state" type="text" required 
-      pattern="^[A-z]+$"/>
+      <input id="state" type="text"  
+      pattern="${regex}"/>
     </div>
     <div>
       <label for="counrty">country</label>
-      <input id="country" type="text" required 
-      pattern="^[A-z]+$"/>
+      <input id="country" type="text"  
+      pattern="${regex}"/>
     </div>
     <div id="button-div">
       <button id="submit-button" type="submit" form="form">search</button>
@@ -125,7 +121,10 @@ const todaysWeather = (obj, temp = 'c', speed = 'Km/h') => {
   container.appendChild(buttonDiv);
   content.appendChild(container);
 };
-
+const clearAndRenderWeather = (obj) => {
+  content.innerHTML = '';
+  todaysWeather(obj);
+};
 const barMenu = () => {
   const container = document.createElement('div');
   container.id = 'bar-menu';
@@ -133,32 +132,23 @@ const barMenu = () => {
   // buttons to change the units
 
   const metricBtn = document.createElement('button');
+  metricBtn.id = 'metric-button';
   metricBtn.innerHTML = 'metric';
   metricBtn.disabled = true;
 
   const standardBtn = document.createElement('button');
+  standardBtn.id = 'standard-button';
   standardBtn.innerHTML = 'standard';
-
-  metricBtn.addEventListener('click', (e) => {
-    displayManager.toggleUnits();
-    e.target.disabled = true;
-    standardBtn.disabled = false;
-  });
-
-  standardBtn.addEventListener('click', (e) => {
-    displayManager.toggleUnits();
-    e.target.disabled = true;
-    metricBtn.disabled = false;
-  });
 
   container.appendChild(metricBtn);
 
   container.appendChild(standardBtn);
-  content.appendChild(container);
+  body.appendChild(container);
 };
 export {
   displayCity,
   userInput,
   todaysWeather,
+  clearAndRenderWeather,
   barMenu,
 };

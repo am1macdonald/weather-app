@@ -1,8 +1,11 @@
 import './stylesheets/reset.css';
 import './stylesheets/style.sass';
+import { async } from 'regenerator-runtime';
 import {
   barMenu,
+  clearAndRenderWeather,
   displayCity,
+  renderWeather,
   todaysWeather,
   userInput,
 } from './scripts/display';
@@ -11,6 +14,13 @@ import { fetchCityName, fetchCityData, fetchWeather } from './scripts/apiCalls';
 const dataHandler = (() => {
   let weather = {};
   let location = '';
+
+  let units = 'metric';
+
+  const toggleUnits = () => {
+    units = units === 'metric' ? 'standard' : 'metric';
+    console.log(units);
+  };
 
   const todaysSummary = () => {
     const current = weather.current;
@@ -68,11 +78,17 @@ const dataHandler = (() => {
       });
   };
 
-  const handleCityData = (cityData) => {
+  const handleFormData = async (cityData) => {
+    const lat = cityData.lat;
+    const lon = cityData.lon;
     setLocation(cityData);
-    displayCity(getLocation());
-
-    console.log(getLocation());
+    fetchWeather(lat, lon)
+      .then((val) => {
+        setWeather(val);
+        clearAndRenderWeather(todaysSummary());
+        hourly();
+        displayCity(getLocation());
+      });
   };
 
   const handlePosition = (position) => {
@@ -86,8 +102,9 @@ const dataHandler = (() => {
   };
 
   return {
-    handleCityData,
+    handleFormData,
     handlePosition,
+    toggleUnits,
   };
 })();
 
@@ -104,7 +121,9 @@ const formHandler = () => {
       const str = `${city.value}, ${state.value}, ${country.value}`;
       const cityData = await fetchCityData(str);
       // console.log(cityData);
-      dataHandler.handleCityData(cityData);
+      if (cityData !== undefined) {
+        dataHandler.handleFormData(cityData);
+      }
     }
   });
 };
@@ -136,4 +155,22 @@ const locateUser = () => {
 
 locateUser();
 
-barMenu();
+(() => {
+  barMenu();
+
+  const metricBtn = document.getElementById('metric-button');
+
+  const standardBtn = document.getElementById('standard-button');
+
+  metricBtn.addEventListener('click', (e) => {
+    dataHandler.toggleUnits();
+    e.target.disabled = true;
+    standardBtn.disabled = false;
+  });
+
+  standardBtn.addEventListener('click', (e) => {
+    dataHandler.toggleUnits();
+    e.target.disabled = true;
+    metricBtn.disabled = false;
+  });
+})();
