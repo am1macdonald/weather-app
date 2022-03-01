@@ -6,18 +6,11 @@ import {
   todaysWeather,
   userInput,
 } from './scripts/display';
-import { fetchCity, fetchWeather } from './scripts/apiCalls';
+import { fetchCityName, fetchCityData, fetchWeather } from './scripts/apiCalls';
 
 const dataHandler = (() => {
   let weather = {};
   let location = '';
-  let units = 'metric';
-
-  const toggleUnits = () => {
-    units = units === 'metric' ? 'standard' : 'metric';
-  };
-
-  const getWeatherObj = () => weather;
 
   const todaysSummary = () => {
     const current = weather.current;
@@ -61,37 +54,70 @@ const dataHandler = (() => {
     }
   };
 
+  const fetchAndRelease = (lat, lon) => {
+    fetchCityName(lat, lon)
+      .then((val) => {
+        setLocation(val);
+        displayCity(getLocation());
+      });
+    fetchWeather(lat, lon)
+      .then((val) => {
+        setWeather(val);
+        todaysWeather(todaysSummary());
+        hourly();
+      });
+  };
+
+  const handleCityData = (cityData) => {
+    setLocation(cityData);
+    displayCity(getLocation());
+
+    console.log(getLocation());
+  };
+
+  const handlePosition = (position) => {
+    const pos = position;
+    const coords = pos.coords;
+    const lat = coords.latitude;
+    const lon = coords.longitude;
+    console.log('lat & lon: ', lat, ' : ', lon);
+
+    fetchAndRelease(lat, lon);
+  };
+
   return {
-    setWeather,
-    setLocation,
-    getWeatherObj,
-    getLocation,
-    todaysSummary,
-    hourly,
+    handleCityData,
+    handlePosition,
   };
 })();
+
+const formHandler = () => {
+  const form = document.querySelector('form');
+  const city = document.getElementById('city');
+  const state = document.getElementById('state');
+  const country = document.getElementById('country');
+  const submitBtn = document.getElementById('submit-button');
+
+  submitBtn.addEventListener('click', async (e) => {
+    e.preventDefault();
+    if (form.checkValidity() === true) {
+      const str = `${city.value}, ${state.value}, ${country.value}`;
+      const cityData = await fetchCityData(str);
+      // console.log(cityData);
+      dataHandler.handleCityData(cityData);
+    }
+  });
+};
 
 const locateUser = () => {
   const options = {
     enableHighAccuracy: false,
     timeout: 10000,
-    maximumAge: 30000,
+    maximumAge: 36000000,
   };
 
   const success = (position) => {
-    const { latitude, longitude } = position.coords;
-
-    fetchCity(latitude, longitude)
-      .then((val) => {
-        dataHandler.setLocation(val);
-        displayCity(dataHandler.getLocation());
-      });
-    fetchWeather(latitude, longitude)
-      .then((val) => {
-        dataHandler.setWeather(val);
-        todaysWeather(dataHandler.todaysSummary());
-        dataHandler.hourly();
-      });
+    dataHandler.handlePosition(position);
   };
 
   const error = (err) => {
@@ -101,6 +127,7 @@ const locateUser = () => {
       console.log(err.message);
     }
     userInput();
+    formHandler();
     return err;
   };
 

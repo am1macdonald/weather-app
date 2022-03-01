@@ -1,9 +1,33 @@
 import format from 'date-fns/format';
 
+const displayManager = (() => {
+  let units = 'metric';
+
+  const toggleUnits = () => {
+    units = units === 'metric' ? 'standard' : 'metric';
+    console.log(units);
+  };
+
+  let state = '';
+
+  const setState = () => {
+    state = '';
+  };
+
+  const getState = () => state;
+
+  return {
+    toggleUnits,
+    setState,
+    getState,
+  };
+})();
+
 const content = document.querySelector('main');
 
 const displayCity = (str) => {
   const container = document.createElement('div');
+  container.id = 'city-container';
 
   container.innerHTML = `
   <h2>${str}</h2>
@@ -12,21 +36,42 @@ const displayCity = (str) => {
   content.prepend(container);
 };
 
+const displayDateToday = (parent) => {
+  const dateToday = format(Date.now(), 'PPP');
+  const container = document.createElement('div');
+  container.id = 'date-container';
+  const date = document.createElement('h3');
+  date.innerHTML = `${dateToday}`;
+
+  container.appendChild(date);
+  parent.appendChild(container);
+};
+
 const userInput = () => {
   const container = document.createElement('div');
   container.id = 'search-window';
-  container.innerHTML = `     
-  <h2>Your City</h2>
-  <form action="">
-    <div><label for="city">city</label><input id="city" type="text" /></div>
+  container.classList.add('content-container');
+  container.innerHTML = `
+
+  <h3>Find Your City</h3>
+  <form id="form" action="javascript:void(0);">
     <div>
-      <label for="state">state</label><input id="state" type="text" />
+      <label for="city">city</label>
+      <input id="city" type="text" required 
+      pattern="^[A-z]+$"/>
     </div>
     <div>
-      <label for="counrty">country</label><input id="country" type="text" />
+      <label for="state">state</label>
+      <input id="state" type="text" required 
+      pattern="^[A-z]+$"/>
     </div>
     <div>
-      <input type="submit" value="search" />
+      <label for="counrty">country</label>
+      <input id="country" type="text" required 
+      pattern="^[A-z]+$"/>
+    </div>
+    <div id="button-div">
+      <button id="submit-button" type="submit" form="form">search</button>
     </div>
   </form>
   `;
@@ -36,14 +81,11 @@ const userInput = () => {
 
 const todaysWeather = (obj, temp = 'c', speed = 'Km/h') => {
   // eslint-disable-next-line new-cap
-  const dateToday = format(Date.now(), 'PPP');
   console.log(obj);
   const container = document.createElement('div');
   container.classList.add('content-container');
-  container.innerHTML = `
-  <div id="date">
-    <h3>${dateToday}</h3>
-  </div>
+  displayDateToday(container);
+  container.insertAdjacentHTML('beforeend', `
   <div id="icon-temp">
     <div id="icon-div"><img src="http://openweathermap.org/img/wn/${obj.icon}@2x.png" alt="icon" />${obj.weather.toLowerCase()}</div>
     <div>${obj.temp}°${temp}</div>
@@ -63,18 +105,19 @@ const todaysWeather = (obj, temp = 'c', speed = 'Km/h') => {
     </div>
     <div>
       <span>Wind:</span>
-      <span>${obj.wind}${speed}</span>
+      <span>${Number.isNaN(obj.wind) ? '0' : obj.wind}${speed}</span>
     </div>
     <div>
       <span>Gusts:</span>
-      <span>${obj.wind_gust}${speed}</span>
+      <span>${Number.isNaN(obj.wind_gust) ? '0' : obj.wind_gust}${speed}</span>
     </div>
   </div>
 
-  `;
+  `);
   const buttonDiv = document.createElement('div');
+  buttonDiv.id = 'button-div';
   const button = document.createElement('button');
-  button.innerHTML = '24-Hour';
+  button.innerHTML = '24-hour';
   button.addEventListener('click', () => {
     console.log('clicked!!');
   });
@@ -87,14 +130,30 @@ const barMenu = () => {
   const container = document.createElement('div');
   container.id = 'bar-menu';
 
-  const unitsButton = document.createElement('button');
-  unitsButton.innerHTML = 'Units';
+  // buttons to change the units
 
-  unitsButton.addEventListener('click', () => {
+  const metricBtn = document.createElement('button');
+  metricBtn.innerHTML = 'metric';
+  metricBtn.disabled = true;
 
+  const standardBtn = document.createElement('button');
+  standardBtn.innerHTML = 'standard';
+
+  metricBtn.addEventListener('click', (e) => {
+    displayManager.toggleUnits();
+    e.target.disabled = true;
+    standardBtn.disabled = false;
   });
 
-  container.appendChild(unitsButton);
+  standardBtn.addEventListener('click', (e) => {
+    displayManager.toggleUnits();
+    e.target.disabled = true;
+    metricBtn.disabled = false;
+  });
+
+  container.appendChild(metricBtn);
+
+  container.appendChild(standardBtn);
   content.appendChild(container);
 };
 export {

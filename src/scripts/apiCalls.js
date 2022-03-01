@@ -19,17 +19,17 @@ const getUserInput = () => {
   return inputString;
 };
 
-const fetchCoordinates = async (inputString) => {
+const fetchCityData = async (inputString) => {
   const result = await fetch(`http://api.openweathermap.org/geo/1.0/direct?q=${inputString}&limit=1&appid=${key}`, { mode: 'cors' });
 
   const data = await result.json();
 
-  // console.log('Location Data: ', data);
+  console.log('Location Data: ', data);
 
   return data[0];
 };
 
-const fetchCity = async (lat, lon) => {
+const fetchCityName = async (lat, lon) => {
   const result = await fetch(`http://api.openweathermap.org/geo/1.0/reverse?lat=${lat}&lon=${lon}&appid=${key}`, { mode: 'cors' });
 
   const data = await result.json();
@@ -46,8 +46,8 @@ const fetchWeather = async (lat, lon) => {
 };
 
 export {
-  fetchCoordinates,
-  fetchCity,
+  fetchCityData,
+  fetchCityName,
   fetchWeather,
   getUserInput,
 };
