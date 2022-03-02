@@ -5,11 +5,11 @@ import {
   barMenu,
   clearAndRenderWeather,
   displayCity,
-  renderWeather,
-  todaysWeather,
+  renderToday,
   userInput,
 } from './scripts/display';
 import { fetchCityName, fetchCityData, fetchWeather } from './scripts/apiCalls';
+import { handlePosition } from './scripts/dataHandler';
 
 const dataHandler = (() => {
   let weather = {};
@@ -49,7 +49,6 @@ const dataHandler = (() => {
 
   const hourly = () => {
     for (let i = 0; i < 1; i += 1) {
-      console.log(todaysSummary());
     }
   };
 
@@ -78,7 +77,7 @@ const dataHandler = (() => {
     fetchWeather(pos.lat, pos.lon, units)
       .then((val) => {
         setWeather(val);
-        todaysWeather(todaysSummary(), unitNames[units]);
+        renderToday(todaysSummary(), unitNames[units]);
         hourly();
         clearAndRenderWeather(todaysSummary(), unitNames[units]);
         displayCity(getLocation());
@@ -142,8 +141,10 @@ const locateUser = () => {
     maximumAge: 36000000,
   };
 
-  const success = (position) => {
+  const success = async (position) => {
     dataHandler.handlePosition(position);
+    const awaited = await handlePosition(position.coords);
+    console.log(awaited);
   };
 
   const error = (err) => {

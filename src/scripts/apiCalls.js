@@ -24,7 +24,7 @@ const fetchCityData = async (inputString) => {
 
   const data = await result.json();
 
-  console.log('Location Data: ', data);
+  console.log('fetchCityData: ', data);
 
   return data[0];
 };
@@ -33,6 +33,7 @@ const fetchCityName = async (lat, lon) => {
   const result = await fetch(`http://api.openweathermap.org/geo/1.0/reverse?lat=${lat}&lon=${lon}&appid=${key}`, { mode: 'cors' });
 
   const data = await result.json();
+  console.log('fetchCityName', data);
 
   return data[0];
 };

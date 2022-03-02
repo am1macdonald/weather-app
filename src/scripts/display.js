@@ -75,9 +75,8 @@ const userInput = () => {
   content.appendChild(container);
 };
 
-const todaysWeather = (obj, units) => {
+const renderToday = (obj, units) => {
   // eslint-disable-next-line new-cap
-  console.log(obj);
   const container = document.createElement('div');
   container.classList.add('content-container');
   displayDateToday(container);
@@ -123,7 +122,7 @@ const todaysWeather = (obj, units) => {
 };
 const clearAndRenderWeather = (obj, units) => {
   content.innerHTML = '';
-  todaysWeather(obj, units);
+  renderToday(obj, units);
 };
 const barMenu = () => {
   const container = document.createElement('div');
@@ -148,7 +147,7 @@ const barMenu = () => {
 export {
   displayCity,
   userInput,
-  todaysWeather,
+  renderToday,
   clearAndRenderWeather,
   barMenu,
 };
