@@ -1,6 +1,5 @@
 /* eslint-disable no-prototype-builtins */
-import { add, format, parseISO } from 'date-fns';
-import { async } from 'regenerator-runtime';
+import { add, format } from 'date-fns';
 import { fetchCityData, fetchCityName, fetchWeather } from './apiCalls';
 
 const unitMan = (() => {
@@ -22,11 +21,12 @@ const unitMan = (() => {
     console.log(unitNames[units]);
     // refac => fetchAndRelease();
   };
-
+  const getUnitNames = () => unitNames[units];
   const getUnits = () => units;
   return {
     toggle,
     getUnits,
+    getUnitNames,
   };
 })();
 
@@ -101,7 +101,7 @@ const weatherMan = (() => {
     const days = [];
     for (let i = 0; i < 7; i += 1) {
       days.push({
-        day: format(add(new Date(), { hours: i }), 'p'),
+        day: format(add(new Date(), { days: i }), 'EEE'),
         weather: summarize(weatherObj.daily[i]),
       });
     }
@@ -150,10 +150,12 @@ const weatherMan = (() => {
     week();
   };
   const getWeather = () => weatherObj;
+
   return {
     setToObj,
     setFromCityData,
     getWeather,
+    today,
   };
 })();
 
@@ -212,4 +214,7 @@ const handlePosition = async (coords) => {
 export {
   handlePosition,
   handleFormData,
+  unitMan,
+  locationMan,
+  weatherMan,
 };

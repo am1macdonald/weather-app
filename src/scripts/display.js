@@ -3,21 +3,6 @@ import format from 'date-fns/format';
 const content = document.querySelector('main');
 const body = document.querySelector('body');
 
-const displayManager = (() => {
-  let state = '';
-
-  const setState = () => {
-    state = '';
-  };
-
-  const getState = () => state;
-
-  return {
-    setState,
-    getState,
-  };
-})();
-
 const displayCity = (str) => {
   const container = document.createElement('div');
   container.id = 'city-container';
@@ -46,7 +31,7 @@ const userInput = () => {
   const regex = "[a-zA-Z.'-]+( [a-zA-Z.'-]+)*";
   const container = document.createElement('div');
   container.id = 'search-window';
-  container.classList.add('content-container');
+  container.id = 'content-container';
   container.innerHTML = `
 
   <h3>Find Your City</h3>
@@ -78,7 +63,7 @@ const userInput = () => {
 const renderToday = (obj, units) => {
   // eslint-disable-next-line new-cap
   const container = document.createElement('div');
-  container.classList.add('content-container');
+  container.id = 'content-container';
   displayDateToday(container);
   container.insertAdjacentHTML('beforeend', `
   <div id="icon-temp">
@@ -144,10 +129,32 @@ const barMenu = () => {
   container.appendChild(imperialBtn);
   body.appendChild(container);
 };
+
+const displayManager = (() => {
+  let state = renderToday;
+
+  const update = (func) => {
+    func();
+    state = func;
+  };
+
+  // removes the content from the screen and returns whatever function
+  // displayed data last
+  const refresh = () => {
+    document.getElementById('content-container').remove();
+    return state;
+  };
+  return {
+    update,
+    refresh,
+  };
+})();
+
 export {
   displayCity,
   userInput,
   renderToday,
   clearAndRenderWeather,
   barMenu,
+  displayManager,
 };

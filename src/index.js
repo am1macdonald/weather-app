@@ -5,11 +5,14 @@ import {
   barMenu,
   clearAndRenderWeather,
   displayCity,
+  displayManager,
   renderToday,
   userInput,
 } from './scripts/display';
 import { fetchCityName, fetchCityData, fetchWeather } from './scripts/apiCalls';
-import { handlePosition } from './scripts/dataHandler';
+import {
+  handlePosition, locationMan, unitMan, weatherMan,
+} from './scripts/dataHandler';
 
 const dataHandler = (() => {
   let weather = {};
@@ -45,11 +48,6 @@ const dataHandler = (() => {
 
     };
     return summary;
-  };
-
-  const hourly = () => {
-    for (let i = 0; i < 1; i += 1) {
-    }
   };
 
   const setWeather = (obj) => {
@@ -88,16 +86,6 @@ const dataHandler = (() => {
     pos.lat = cityData.lat;
     pos.lon = cityData.lon;
     setLocation(cityData);
-    fetchAndRelease();
-  };
-
-  const handlePosition = async (position) => {
-    pos.lat = position.coords.latitude;
-    pos.lon = position.coords.longitude;
-    fetchCityName(pos.lat, pos.lon)
-      .then((val) => {
-        setLocation(val);
-      });
     fetchAndRelease();
   };
 
@@ -142,8 +130,10 @@ const locateUser = () => {
   };
 
   const success = async (position) => {
-    dataHandler.handlePosition(position);
+    // dataHandler.handlePosition(position);
     const awaited = await handlePosition(position.coords);
+    displayCity(locationMan.getName());
+    renderToday(weatherMan.today(), unitMan.getUnitNames());
     console.log(awaited);
   };
 
@@ -170,14 +160,18 @@ locateUser();
 
   const imperialBtn = document.getElementById('imperial-button');
 
-  metricBtn.addEventListener('click', (e) => {
-    dataHandler.toggleUnits();
+  metricBtn.addEventListener('click', async (e) => {
+    unitMan.toggle();
+    await weatherMan.setFromCityData();
+    displayManager.refresh()(weatherMan.today(), unitMan.getUnitNames());
     e.target.disabled = true;
     imperialBtn.disabled = false;
   });
 
-  imperialBtn.addEventListener('click', (e) => {
-    dataHandler.toggleUnits();
+  imperialBtn.addEventListener('click', async (e) => {
+    unitMan.toggle();
+    await weatherMan.setFromCityData();
+    displayManager.refresh()(weatherMan.today(), unitMan.getUnitNames());
     e.target.disabled = true;
     metricBtn.disabled = false;
   });
