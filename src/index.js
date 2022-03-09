@@ -1,6 +1,5 @@
 import './stylesheets/reset.css';
 import './stylesheets/style.sass';
-import { async } from 'regenerator-runtime';
 import {
   barMenu,
   clearAndRenderWeather,

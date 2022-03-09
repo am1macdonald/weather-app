@@ -1,14 +1,14 @@
-$med-green: #004643
+$light-blue: #8bd3dd
+  
+$dark-blue: #172c66
 
-$whites: #fffffe
+$darker-blue: #001858
 
-$light-green: #abd1c6
+$beige: #f8eaca
 
-$yellow: #f9bc60
+$pink: #f582ae
 
-$dark-green: #001e1d
-
-$orange:#e16162
+$off-white: #FAF9F6
 
 @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,700;1,400&display=swap')
 
@@ -23,28 +23,29 @@ button
 h1
   font-size: 3rem
   line-height: 3.5rem
+  font-weight: 500
 
-  color: $whites
+  color: $darker-blue
 
 h2
   font-size: 2.2rem
   line-height: 2.7rem
   text-align: center
 
-  color: $whites
+  color: $darker-blue
 
 h3
 
   text-align: center
   font-size: 1.8rem
   line-height: 2rem
-  color: $dark-green
+  color: $darker-blue
 
 body
   max-width: 100vw
   max-height: 100vh
-  background-color: $med-green
-  color: $light-green
+  background-color: $off-white
+  color: $pink
 
 
   font-family: $poppins
@@ -91,13 +92,13 @@ main
   margin-bottom: 7vh
 
 
-  border: 5px solid $dark-green
+  border: 5px solid $dark-blue
 
-  background-color: $light-green
+  background-color: $beige
 
-  color: $dark-green
+  color: $darker-blue
 
-  box-shadow: 5px 4px 0px $dark-green
+  box-shadow: 12px 10px 0px $dark-blue
 
   & > * 
     width: 100%
@@ -112,7 +113,7 @@ main
       line-height: 1.3rem
       text-align: center
 
-      background-color: $yellow
+      background-color: $pink
 
 #button-div
   display: flex
@@ -131,7 +132,7 @@ main
       line-height: 1.3rem
       text-align: center
 
-      background-color: $orange
+      background-color: $light-blue
 
 #date-container
   text-align: center
@@ -160,7 +161,7 @@ main
       position: absolute
       right: 50%
       height: 3rem
-      border-right: 2px solid $dark-green
+      border-right: 2px solid $dark-blue
 
 #details
   display: grid
@@ -168,10 +169,10 @@ main
   height: clamp(25%, 500px, 150px)
   width: 90%
 
-  border: 2px solid $dark-green
+  border: 2px solid $dark-blue
 
 
-  background-color: $whites
+  background-color: $off-white
 
   div
     display: flex
@@ -194,7 +195,7 @@ form
   justify-content: space-around
   
   text-align: center
-  color: $dark-green
+  color: $darker-blue
 
   div
     padding-bottom: 3vh
