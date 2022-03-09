@@ -68,28 +68,29 @@ button {
 h1 {
   font-size: 3rem;
   line-height: 3.5rem;
-  color: #fffffe;
+  font-weight: 500;
+  color: #001858;
 }
 
 h2 {
   font-size: 2.2rem;
   line-height: 2.7rem;
   text-align: center;
-  color: #fffffe;
+  color: #001858;
 }
 
 h3 {
   text-align: center;
   font-size: 1.8rem;
   line-height: 2rem;
-  color: #001e1d;
+  color: #001858;
 }
 
 body {
   max-width: 100vw;
   max-height: 100vh;
-  background-color: #004643;
-  color: #abd1c6;
+  background-color: #FAF9F6;
+  color: #f582ae;
   font-family: "Poppins", sans-serif;
 }
 
@@ -128,10 +129,10 @@ main {
   padding-bottom: 0;
   margin-top: 2vh;
   margin-bottom: 7vh;
-  border: 5px solid #001e1d;
-  background-color: #abd1c6;
-  color: #001e1d;
-  box-shadow: 5px 4px 0px #001e1d;
+  border: 5px solid #172c66;
+  background-color: #f8eaca;
+  color: #001858;
+  box-shadow: 12px 10px 0px #172c66;
 }
 #content-container > * {
   width: 100%;
@@ -143,7 +144,7 @@ main {
   font-size: 1rem;
   line-height: 1.3rem;
   text-align: center;
-  background-color: #f9bc60;
+  background-color: #f582ae;
 }
 
 #button-div {
@@ -159,7 +160,7 @@ main {
   font-size: 1.5rem;
   line-height: 1.3rem;
   text-align: center;
-  background-color: #e16162;
+  background-color: #8bd3dd;
 }
 
 #date-container {
@@ -189,7 +190,7 @@ main {
   position: absolute;
   right: 50%;
   height: 3rem;
-  border-right: 2px solid #001e1d;
+  border-right: 2px solid #172c66;
 }
 
 #details {
@@ -197,8 +198,8 @@ main {
   grid-template-rows: repeat(auto-fit, 1fr);
   height: clamp(25%, 500px, 150px);
   width: 90%;
-  border: 2px solid #001e1d;
-  background-color: #fffffe;
+  border: 2px solid #172c66;
+  background-color: #FAF9F6;
 }
 #details div {
   display: flex;
@@ -222,7 +223,7 @@ form {
   flex-direction: column;
   justify-content: space-around;
   text-align: center;
-  color: #001e1d;
+  color: #001858;
 }
 form div {
   padding-bottom: 3vh;
