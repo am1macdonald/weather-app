@@ -63,6 +63,11 @@ table {
 button {
   cursor: pointer;
   font-family: "Poppins", sans-serif;
+  border: none;
+  font-size: 1.5rem;
+  line-height: 1.3rem;
+  text-align: center;
+  background-color: #8bd3dd;
 }
 
 h1 {
@@ -138,29 +143,20 @@ main {
   width: 100%;
   margin-bottom: 1vh;
 }
-#content-container > * button {
-  width: auto;
-  height: 1.6rem;
-  font-size: 1rem;
-  line-height: 1.3rem;
-  text-align: center;
-  background-color: #f582ae;
-}
 
 #button-div {
   display: flex;
-  justify-content: center;
+  justify-content: space-around;
   align-items: center;
 }
 #button-div button {
-  width: auto;
+  width: 40%;
   height: auto;
-  padding: 0.5rem 1rem;
-  border: none;
-  font-size: 1.5rem;
-  line-height: 1.3rem;
+  font-size: 1.3rem;
+  line-height: 1.5rem;
   text-align: center;
-  background-color: #8bd3dd;
+  background-color: #f582ae;
+  padding: 0.5rem 1rem;
 }
 
 #date-container {
@@ -258,4 +254,10 @@ form label + input {
 #bar-menu button {
   width: 50%;
   height: inherit;
+}
+#bar-menu #metric-button {
+  border-right: 1px solid #172c66;
+}
+#bar-menu #imperial-button {
+  border-left: 1px solid #172c66;
 }
