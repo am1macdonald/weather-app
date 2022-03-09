@@ -159,46 +159,19 @@ const weatherMan = (() => {
   };
 })();
 
-// const todaysSummary = () => {
-//   const current = weatherMan.current;
-//   const summary = {
-//     weather: current.weather[0].main,
-//     icon: current.weather[0].icon,
-//     temp: Math.round(current.temp),
-//     feels_like: Math.round(current.feels_like),
-//     humidity: current.humidity,
-//     wind: Math.round(current.wind_speed),
-//     wind_gust: Math.round(current.wind_gust),
+const handleFormData = async (str) => {
+  const cityData = await fetchCityData(str);
+  if (cityData !== undefined) {
+    console.log(cityData)
+  }
+  await locationMan.setLocation(cityData);
+  await weatherMan.setFromCityData();
+  weatherMan.getWeather()
 
-//   };
-//   return summary;
-// };
-
-// const hourly = () => {
-//   for (let i = 0; i < 1; i += 1) {
-//     console.log(todaysSummary());
-//   }
-// };
-
-// const fetchWeather = async () => {
-//   fetchWeather(pos.lat, pos.lon, units)
-//     .then((val) => {
-//       setWeather(val);
-//       todaysWeather(todaysSummary(), unitNames[units]);
-//       hourly();
-//       clearAndRenderWeather(todaysSummary(), unitNames[units]);
-//       displayCity(getLocation());
-//     });
-// };
-
-const handleFormData = async (cityData) => {
-  pos.lat = cityData.lat;
-  pos.lon = cityData.lon;
-  setLocation(cityData);
-  fetchAndRelease();
+  return new Promise((resolve) => {
+    resolve('data handled');
+  });
 };
-
-// Under Construction
 
 const handlePosition = async (coords) => {
   const val = await fetchCityName(coords.latitude, coords.longitude);

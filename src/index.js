@@ -10,98 +10,12 @@ import {
 } from './scripts/display';
 import { fetchCityName, fetchCityData, fetchWeather } from './scripts/apiCalls';
 import {
+  handleFormData,
   handlePosition, locationMan, unitMan, weatherMan,
 } from './scripts/dataHandler';
 
-const dataHandler = (() => {
-  let weather = {};
-  let location = '';
-  const pos = {
-    lat: '',
-    lon: '',
-  };
-
-  let units = 'metric';
-
-  const unitNames = {
-    imperial: {
-      speed: 'mph',
-      temp: 'f',
-    },
-    metric: {
-      speed: 'm/s',
-      temp: 'C',
-    },
-  };
-
-  const todaysSummary = () => {
-    const current = weather.current;
-    const summary = {
-      weather: current.weather[0].main,
-      icon: current.weather[0].icon,
-      temp: Math.round(current.temp),
-      feels_like: Math.round(current.feels_like),
-      humidity: current.humidity,
-      wind: Math.round(current.wind_speed),
-      wind_gust: Math.round(current.wind_gust),
-
-    };
-    return summary;
-  };
-
-  const setWeather = (obj) => {
-    weather = obj;
-  };
-
-  const getLocation = () => location;
-
-  const setLocation = (obj) => {
-    const type = typeof obj;
-    // eslint-disable-next-line no-prototype-builtins
-    if (type === 'object' && obj.hasOwnProperty('name')) {
-      // eslint-disable-next-line no-prototype-builtins
-      if (obj.hasOwnProperty('state')) {
-        location = `${obj.name}, ${obj.state}`;
-      } else {
-        location = `${obj.name}`;
-      }
-    } else {
-      console.log(type);
-    }
-  };
-
-  const fetchAndRelease = async () => {
-    fetchWeather(pos.lat, pos.lon, units)
-      .then((val) => {
-        setWeather(val);
-        renderToday(todaysSummary(), unitNames[units]);
-        hourly();
-        clearAndRenderWeather(todaysSummary(), unitNames[units]);
-        displayCity(getLocation());
-      });
-  };
-
-  const handleFormData = async (cityData) => {
-    pos.lat = cityData.lat;
-    pos.lon = cityData.lon;
-    setLocation(cityData);
-    fetchAndRelease();
-  };
-
-  const toggleUnits = () => {
-    units = units === 'metric' ? 'imperial' : 'metric';
-    console.log(unitNames[units]);
-    fetchAndRelease();
-  };
-
-  return {
-    handleFormData,
-    handlePosition,
-    toggleUnits,
-  };
-})();
-
 const formHandler = () => {
+  const formContainer = document.getElementById('content-container')
   const form = document.querySelector('form');
   const city = document.getElementById('city');
   const state = document.getElementById('state');
@@ -112,11 +26,11 @@ const formHandler = () => {
     e.preventDefault();
     if (form.checkValidity() === true) {
       const str = `${city.value}, ${state.value}, ${country.value}`;
-      const cityData = await fetchCityData(str);
-      // console.log(cityData);
-      if (cityData !== undefined) {
-        dataHandler.handleFormData(cityData);
-      }
+      await handleFormData(str);
+      displayCity(locationMan.getName());
+      renderToday(weatherMan.today(), unitMan.getUnitNames())
+      console.log('awaited')
+      formContainer.remove()
     }
   });
 };
