@@ -156,6 +156,7 @@ const weatherMan = (() => {
     setFromCityData,
     getWeather,
     today,
+    week,
   };
 })();
 
@@ -171,6 +172,7 @@ const handleFormData = async (str) => {
   return new Promise((resolve) => {
     resolve('data handled');
   });
+  
 };
 
 const handlePosition = async (coords) => {

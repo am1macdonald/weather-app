@@ -1,4 +1,5 @@
 import format from 'date-fns/format';
+import { unitMan, weatherMan } from './dataHandler';
 
 const content = document.querySelector('main');
 const body = document.querySelector('body');
@@ -60,7 +61,76 @@ const userInput = () => {
   content.appendChild(container);
 };
 
-const renderToday = (obj, units) => {
+const pageButtons = (parent, opt) => {
+  const buttonDiv = document.createElement('div');
+  buttonDiv.id = 'button-div';
+  const hourlyButton = document.createElement('button');
+  hourlyButton.innerHTML = '24-hour';
+
+  const weekButton = document.createElement('button');
+  weekButton.innerHTML = '7-day';
+
+  const todayButton = document.createElement('button');
+  todayButton.innerHTML = 'today';
+
+  hourlyButton.addEventListener('click', () => {
+    parent.remove();
+    hourly();
+    displayManager.update(hourly);
+  });
+
+  weekButton.addEventListener('click', () => {
+    parent.remove();
+    sevenDay();
+    displayManager.update(sevenDay);
+  })
+
+  todayButton.addEventListener('click', () => {
+    parent.remove();
+    renderToday();
+    displayManager.update(renderToday);
+  })
+
+  switch (typeof opt === 'number') {
+    case (opt === 1):
+      buttonDiv.appendChild(weekButton);
+      buttonDiv.appendChild(hourlyButton);
+      break;
+    case (opt === 2):
+      buttonDiv.appendChild(weekButton);
+      buttonDiv.appendChild(todayButton);
+      break;
+    case (opt === 3):
+      buttonDiv.appendChild(todayButton);
+      buttonDiv.appendChild(hourlyButton);
+      break;
+    default:
+      buttonDiv.appendChild(todayButton);
+  }
+  parent.appendChild(buttonDiv);
+}
+
+const sevenDay = (arr, units) => {
+  const container = document.createElement('div');
+  container.id = 'content-container';
+
+  console.log(weatherMan.week())
+
+  pageButtons(container, 3);
+  content.appendChild(container);
+}
+
+const hourly = (arr, units) => {
+  const container = document.createElement('div');
+  container.id = 'content-container';
+
+
+  pageButtons(container, 2);
+  content.appendChild(container);
+}
+const renderToday = () => {
+  let obj = weatherMan.today();
+  let units = unitMan.getUnitNames();
   // eslint-disable-next-line new-cap
   const container = document.createElement('div');
   container.id = 'content-container';
@@ -94,20 +164,13 @@ const renderToday = (obj, units) => {
   </div>
 
   `);
-  const buttonDiv = document.createElement('div');
-  buttonDiv.id = 'button-div';
-  const button = document.createElement('button');
-  button.innerHTML = '24-hour';
-  button.addEventListener('click', () => {
-    console.log('clicked!!');
-  });
-  buttonDiv.appendChild(button);
-  container.appendChild(buttonDiv);
+
+  pageButtons(container, 1);
   content.appendChild(container);
 };
 const clearAndRenderWeather = (obj, units) => {
   content.innerHTML = '';
-  renderToday(obj, units);
+  renderToday();
 };
 const barMenu = () => {
   const container = document.createElement('div');
@@ -134,15 +197,14 @@ const displayManager = (() => {
   let state = renderToday;
 
   const update = (func) => {
-    func();
     state = func;
+    console.log(state)
   };
-
   // removes the content from the screen and returns whatever function
   // displayed data last
   const refresh = () => {
     document.getElementById('content-container').remove();
-    return state;
+    state();
   };
   return {
     update,

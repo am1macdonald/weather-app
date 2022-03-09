@@ -8,7 +8,6 @@ import {
   renderToday,
   userInput,
 } from './scripts/display';
-import { fetchCityName, fetchCityData, fetchWeather } from './scripts/apiCalls';
 import {
   handleFormData,
   handlePosition, locationMan, unitMan, weatherMan,
@@ -28,7 +27,7 @@ const formHandler = () => {
       const str = `${city.value}, ${state.value}, ${country.value}`;
       await handleFormData(str);
       displayCity(locationMan.getName());
-      renderToday(weatherMan.today(), unitMan.getUnitNames())
+      renderToday()
       console.log('awaited')
       formContainer.remove()
     }
@@ -43,10 +42,10 @@ const locateUser = () => {
   };
 
   const success = async (position) => {
-    // dataHandler.handlePosition(position);
+
     const awaited = await handlePosition(position.coords);
     displayCity(locationMan.getName());
-    renderToday(weatherMan.today(), unitMan.getUnitNames());
+    renderToday();
     console.log(awaited);
   };
 
@@ -76,7 +75,7 @@ locateUser();
   metricBtn.addEventListener('click', async (e) => {
     unitMan.toggle();
     await weatherMan.setFromCityData();
-    displayManager.refresh()(weatherMan.today(), unitMan.getUnitNames());
+    displayManager.refresh();
     e.target.disabled = true;
     imperialBtn.disabled = false;
   });
@@ -84,7 +83,7 @@ locateUser();
   imperialBtn.addEventListener('click', async (e) => {
     unitMan.toggle();
     await weatherMan.setFromCityData();
-    displayManager.refresh()(weatherMan.today(), unitMan.getUnitNames());
+    displayManager.refresh();
     e.target.disabled = true;
     metricBtn.disabled = false;
   });

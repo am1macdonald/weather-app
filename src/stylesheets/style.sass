@@ -20,6 +20,12 @@ $poppins: 'Poppins', sans-serif
 button
     cursor: pointer
     font-family: $poppins
+    border: none
+
+    font-size: 1.5rem
+    line-height: 1.3rem
+    text-align: center
+    background-color: $light-blue
 h1
   font-size: 3rem
   line-height: 3.5rem
@@ -105,34 +111,24 @@ main
 
     margin-bottom: 1vh
 
-    button
-      width: auto
-      height: 1.6rem
-
-      font-size: 1rem
-      line-height: 1.3rem
-      text-align: center
-
-      background-color: $pink
-
 #button-div
   display: flex
-  justify-content: center
+  justify-content: space-around
   align-items: center
 
   button
-      width: auto
+      width: 40%
       height: auto
+
+      font-size: 1.3rem
+      line-height: 1.5rem
+      text-align: center
+
+      background-color: $pink
+      
 
       padding: 0.5rem 1rem
 
-      border: none
-
-      font-size: 1.5rem
-      line-height: 1.3rem
-      text-align: center
-
-      background-color: $light-blue
 
 #date-container
   text-align: center
@@ -236,9 +232,17 @@ form
 
   background-color: rgba(255, 255, 254, 0.63)
 
+
   button
     width: 50%
     height: inherit
+
+  #metric-button
+    border-right: 1px solid $dark-blue
+  #imperial-button
+    
+    border-left: 1px solid $dark-blue
+    
 
 // @media screen and (min-width: 500px ) 
 //   nav
