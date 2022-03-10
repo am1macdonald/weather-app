@@ -1,4 +1,5 @@
 import format from 'date-fns/format';
+import SimpleBar from 'simplebar';
 import { unitMan, weatherMan } from './dataHandler';
 
 const content = document.querySelector('main');
@@ -110,17 +111,51 @@ const pageButtons = (parent, opt) => {
   parent.appendChild(buttonDiv);
 }
 
-const sevenDay = (arr, units) => {
+const sevenDay = () => {
+  const obj = weatherMan.week();
+  const units = unitMan.getUnitNames();
+
   const container = document.createElement('div');
   container.id = 'content-container';
 
-  console.log(weatherMan.week())
+  const weekContainer = document.createElement('div');
+  weekContainer.id = 'week-container';
 
+  const list = document.createElement('ul');
+
+  // const scroll = new SimpleBar(list);
+
+  // const target = scroll.getContentElement()
+
+  obj.forEach(day => {
+    const dayDiv = document.createElement('li');
+    dayDiv.classList.add('day-div');
+    dayDiv.insertAdjacentHTML('beforeend',`
+      <div>
+        <span>Temp:</span>
+        <span> ${obj.temp}°${units.temp}</span>
+      </div>
+      <div>
+        <span>Feels Like:</span>
+        <span>${obj.feels_like}°${units.temp}</span>
+      </div>
+      <div>
+        <span>Humidity:</span>
+        <span>${obj.humidity}%</span>
+      </div>
+    `);
+
+    list.appendChild(dayDiv);
+  })
+
+  new SimpleBar(list);
+  weekContainer.appendChild(list);
+  container.appendChild(weekContainer);
   pageButtons(container, 3);
   content.appendChild(container);
 }
 
-const hourly = (arr, units) => {
+const hourly = () => {
   const container = document.createElement('div');
   container.id = 'content-container';
 
@@ -129,8 +164,8 @@ const hourly = (arr, units) => {
   content.appendChild(container);
 }
 const renderToday = () => {
-  let obj = weatherMan.today();
-  let units = unitMan.getUnitNames();
+  const obj = weatherMan.today();
+  const units = unitMan.getUnitNames();
   // eslint-disable-next-line new-cap
   const container = document.createElement('div');
   container.id = 'content-container';
