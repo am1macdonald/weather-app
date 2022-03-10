@@ -144,6 +144,19 @@ main {
   margin-bottom: 1vh;
 }
 
+#week-container {
+  width: 100%;
+  height: auto;
+}
+#week-container ul {
+  overflow: scroll;
+  background-color: #FAF9F6;
+  border: 2px solid #172c66;
+}
+#week-container ul li {
+  height: 10vh;
+}
+
 #button-div {
   display: flex;
   justify-content: space-around;
