@@ -176,7 +176,7 @@ const sevenDay = () => {
 };
 
 const hourly = () => {
-  const obj = weatherMan.hourly();
+  const hours = weatherMan.hourly();
   const units = unitMan.getUnitNames();
 
   const container = document.createElement('div');
@@ -191,7 +191,7 @@ const hourly = () => {
 
   const target = scroll.getContentElement();
 
-  obj.forEach((hour) => {
+  hours.forEach((hour) => {
     const obj = hour.weather;
     const dayDiv = document.createElement('li');
     dayDiv.classList.add('day-div');
