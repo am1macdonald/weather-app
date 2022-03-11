@@ -166,7 +166,7 @@ const sevenDay = () => {
       </div>
     `);
 
-    list.appendChild(dayDiv);
+    target.appendChild(dayDiv);
   });
 
   weekContainer.appendChild(list);
@@ -187,10 +187,9 @@ const hourly = () => {
 
   const list = document.createElement('ul');
 
-  const scroll = new SimpleBar(list);
+  const scroll = new SimpleBar(list, { autoHide: false });
 
   const target = scroll.getContentElement();
-
   hours.forEach((hour) => {
     const obj = hour.weather;
     const dayDiv = document.createElement('li');
@@ -229,7 +228,7 @@ const hourly = () => {
       </div>
     `);
 
-    list.appendChild(dayDiv);
+    target.appendChild(dayDiv);
   });
 
   hoursContainer.appendChild(list);

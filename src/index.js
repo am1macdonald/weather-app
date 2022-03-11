@@ -1,5 +1,6 @@
 import './stylesheets/reset.css';
 import './stylesheets/style.sass';
+import 'simplebar/dist/simplebar.css';
 import {
   barMenu,
   displayCity,
