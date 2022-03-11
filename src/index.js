@@ -2,7 +2,6 @@ import './stylesheets/reset.css';
 import './stylesheets/style.sass';
 import {
   barMenu,
-  clearAndRenderWeather,
   displayCity,
   displayManager,
   renderToday,
@@ -14,7 +13,7 @@ import {
 } from './scripts/dataHandler';
 
 const formHandler = () => {
-  const formContainer = document.getElementById('content-container')
+  const formContainer = document.getElementById('content-container');
   const form = document.querySelector('form');
   const city = document.getElementById('city');
   const state = document.getElementById('state');
@@ -25,11 +24,20 @@ const formHandler = () => {
     e.preventDefault();
     if (form.checkValidity() === true) {
       const str = `${city.value}, ${state.value}, ${country.value}`;
-      await handleFormData(str);
-      displayCity(locationMan.getName());
-      renderToday()
-      console.log('awaited')
-      formContainer.remove()
+
+      handleFormData(str).then((result) => {
+        if (!result) {
+          throw new Error('bad input');
+        }
+        formContainer.remove();
+        displayCity(locationMan.getName());
+        renderToday();
+      }).catch((error) => {
+        console.error(error);
+        document.getElementById('incorrect-input').style.display = 'block';
+      });
+    } else {
+      document.getElementById('incorrect-input').style.display = 'block';
     }
   });
 };
@@ -42,11 +50,13 @@ const locateUser = () => {
   };
 
   const success = async (position) => {
-
-    const awaited = await handlePosition(position.coords);
-    displayCity(locationMan.getName());
-    renderToday();
-    console.log(awaited);
+    handlePosition(position.coords).then((res) => {
+      if (!res) {
+        throw new Error('no response');
+      }
+      displayCity(locationMan.getName());
+      renderToday();
+    }).catch((error) => { console.error(error); });
   };
 
   const error = (err) => {

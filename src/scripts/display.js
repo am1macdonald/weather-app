@@ -37,6 +37,7 @@ const userInput = () => {
   container.innerHTML = `
 
   <h3>Find Your City</h3>
+  <span id="incorrect-input">Try Again!</span>
   <form id="form" action="javascript:void(0);">
     <div>
       <label for="city">city</label>
@@ -84,13 +85,13 @@ const pageButtons = (parent, opt) => {
     parent.remove();
     sevenDay();
     displayManager.update(sevenDay);
-  })
+  });
 
   todayButton.addEventListener('click', () => {
     parent.remove();
     renderToday();
     displayManager.update(renderToday);
-  })
+  });
 
   switch (typeof opt === 'number') {
     case (opt === 1):
@@ -109,7 +110,7 @@ const pageButtons = (parent, opt) => {
       buttonDiv.appendChild(todayButton);
   }
   parent.appendChild(buttonDiv);
-}
+};
 
 const sevenDay = () => {
   const obj = weatherMan.week();
@@ -119,18 +120,89 @@ const sevenDay = () => {
   container.id = 'content-container';
 
   const weekContainer = document.createElement('div');
-  weekContainer.id = 'week-container';
+  weekContainer.id = 'list-container';
 
   const list = document.createElement('ul');
 
-  // const scroll = new SimpleBar(list);
+  const scroll = new SimpleBar(list);
 
-  // const target = scroll.getContentElement()
+  const target = scroll.getContentElement();
 
-  obj.forEach(day => {
+  obj.forEach((day) => {
+    const obj = day.weather;
     const dayDiv = document.createElement('li');
     dayDiv.classList.add('day-div');
-    dayDiv.insertAdjacentHTML('beforeend',`
+    dayDiv.insertAdjacentHTML('beforeend', `
+      <div>
+        <span class="li-title">${day.day}</span>
+      </div>
+      <div>
+        <span>Weather:</span>
+        <span> ${obj.weather}</span>
+      </div>
+      <div>
+        <span>High:</span>
+        <span> ${obj.temp.high}°${units.temp}</span>
+      </div>
+      <div>
+        <span>Low:</span>
+        <span>${obj.temp.low}°${units.temp}</span>
+      </div>
+      <div>
+        <span>Humidity:</span>
+        <span>${obj.humidity}%</span>
+      </div>
+      <div>
+        <span>pop:</span>
+        <span>${Math.round(obj.pop * 100)}%</span>
+      </div>
+      <div>
+        <span>Wind:</span>
+        <span>${Number.isNaN(obj.wind) ? '0' : obj.wind} ${units.speed}</span>
+      </div>
+      <div>
+        <span>Gusts:</span>
+        <span>${Number.isNaN(obj.wind_gust) ? '0' : obj.wind_gust} ${units.speed}</span>
+      </div>
+    `);
+
+    list.appendChild(dayDiv);
+  });
+
+  weekContainer.appendChild(list);
+  container.appendChild(weekContainer);
+  pageButtons(container, 3);
+  content.appendChild(container);
+};
+
+const hourly = () => {
+  const obj = weatherMan.hourly();
+  const units = unitMan.getUnitNames();
+
+  const container = document.createElement('div');
+  container.id = 'content-container';
+
+  const hoursContainer = document.createElement('div');
+  hoursContainer.id = 'list-container';
+
+  const list = document.createElement('ul');
+
+  const scroll = new SimpleBar(list);
+
+  const target = scroll.getContentElement();
+
+  obj.forEach((hour) => {
+    const obj = hour.weather;
+    const dayDiv = document.createElement('li');
+    dayDiv.classList.add('day-div');
+    dayDiv.insertAdjacentHTML('beforeend', `
+      <div>
+        <span class="li-title">${hour.time}</span>
+      </div>
+      <div>
+        <span>Weather:</span>
+        <span> ${obj.weather}</span>
+      </div>
       <div>
         <span>Temp:</span>
         <span> ${obj.temp}°${units.temp}</span>
@@ -143,26 +215,28 @@ const sevenDay = () => {
         <span>Humidity:</span>
         <span>${obj.humidity}%</span>
       </div>
+      <div>
+        <span>pop:</span>
+        <span>${Math.round(obj.pop * 100)}%</span>
+      </div>
+      <div>
+        <span>Wind:</span>
+        <span>${Number.isNaN(obj.wind) ? '0' : obj.wind} ${units.speed}</span>
+      </div>
+      <div>
+        <span>Gusts:</span>
+        <span>${Number.isNaN(obj.wind_gust) ? '0' : obj.wind_gust} ${units.speed}</span>
+      </div>
     `);
 
     list.appendChild(dayDiv);
-  })
+  });
 
-  new SimpleBar(list);
-  weekContainer.appendChild(list);
-  container.appendChild(weekContainer);
-  pageButtons(container, 3);
-  content.appendChild(container);
-}
-
-const hourly = () => {
-  const container = document.createElement('div');
-  container.id = 'content-container';
-
-
+  hoursContainer.appendChild(list);
+  container.appendChild(hoursContainer);
   pageButtons(container, 2);
   content.appendChild(container);
-}
+};
 const renderToday = () => {
   const obj = weatherMan.today();
   const units = unitMan.getUnitNames();
@@ -203,10 +277,7 @@ const renderToday = () => {
   pageButtons(container, 1);
   content.appendChild(container);
 };
-const clearAndRenderWeather = (obj, units) => {
-  content.innerHTML = '';
-  renderToday();
-};
+
 const barMenu = () => {
   const container = document.createElement('div');
   container.id = 'bar-menu';
@@ -233,7 +304,7 @@ const displayManager = (() => {
 
   const update = (func) => {
     state = func;
-    console.log(state)
+    console.log(state);
   };
   // removes the content from the screen and returns whatever function
   // displayed data last
@@ -251,7 +322,6 @@ export {
   displayCity,
   userInput,
   renderToday,
-  clearAndRenderWeather,
   barMenu,
   displayManager,
 };

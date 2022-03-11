@@ -20,22 +20,38 @@ const getUserInput = () => {
 };
 
 const fetchCityData = async (inputString) => {
-  const result = await fetch(`http://api.openweathermap.org/geo/1.0/direct?q=${inputString}&limit=1&appid=${key}`, { mode: 'cors' });
+  try {
+    const result = await fetch(`http://api.openweathermap.org/geo/1.0/direct?q=${inputString}&limit=1&appid=${key}`, { mode: 'cors' });
+    if (!result.ok) {
+      throw new Error(`HTTP error: ${result.status}`);
+    }
+    const data = await result.json();
+    if (data.length === 0) {
+      throw new Error('fetchCityData: No matching city found');
+    }
 
-  const data = await result.json();
+    // console.log('fetchCityData: ', data);
 
-  console.log('fetchCityData: ', data);
-
-  return data[0];
+    return data[0];
+  } catch (error) {
+    console.error(error);
+    return error;
+  }
 };
 
 const fetchCityName = async (lat, lon) => {
-  const result = await fetch(`http://api.openweathermap.org/geo/1.0/reverse?lat=${lat}&lon=${lon}&appid=${key}`, { mode: 'cors' });
+  try {
+    const result = await fetch(`http://api.openweathermap.org/geo/1.0/reverse?lat=${lat}&lon=${lon}&appid=${key}`, { mode: 'cors' });
+    if (!result.ok) {
+      throw new Error(`HTTP error: ${result.status}`);
+    }
+    const data = await result.json();
+    console.log('fetchCityName', data);
 
-  const data = await result.json();
-  console.log('fetchCityName', data);
-
-  return data[0];
+    return data[0];
+  } catch (error) {
+    return error;
+  }
 };
 
 const fetchWeather = async (lat, lon, units = 'metric') => {

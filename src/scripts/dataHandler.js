@@ -1,5 +1,5 @@
 /* eslint-disable no-prototype-builtins */
-import { add, format } from 'date-fns';
+import { add, format, roundToNearestMinutes } from 'date-fns';
 import { fetchCityData, fetchCityName, fetchWeather } from './apiCalls';
 
 const unitMan = (() => {
@@ -86,6 +86,7 @@ const weatherMan = (() => {
       humidity: obj.humidity,
       wind: Math.round(obj.wind_speed),
       wind_gust: Math.round(obj.wind_gust),
+      pop: obj.pop,
     };
     if (typeof obj.temp === 'object') {
       summary.temp = {
@@ -101,7 +102,7 @@ const weatherMan = (() => {
     const days = [];
     for (let i = 0; i < 7; i += 1) {
       days.push({
-        day: format(add(new Date(), { days: i }), 'EEE'),
+        day: format(add(new Date(), { days: i }), 'iiii'),
         weather: summarize(weatherObj.daily[i]),
       });
     }
@@ -113,7 +114,7 @@ const weatherMan = (() => {
     const hours = [];
     for (let i = 0; i < 24; i += 1) {
       hours.push({
-        time: format(add(new Date(), { hours: i }), 'p'),
+        time: format(roundToNearestMinutes(add(new Date(), { hours: i }), { nearestTo: 30 }), 'p'),
         weather: summarize(weatherObj.hourly[i]),
       });
     }
@@ -157,33 +158,43 @@ const weatherMan = (() => {
     getWeather,
     today,
     week,
+    hourly,
   };
 })();
 
 const handleFormData = async (str) => {
-  const cityData = await fetchCityData(str);
-  if (cityData !== undefined) {
-    console.log(cityData)
-  }
-  await locationMan.setLocation(cityData);
-  await weatherMan.setFromCityData();
-  weatherMan.getWeather()
+  try {
+    const cityData = await fetchCityData(str);
 
-  return new Promise((resolve) => {
-    resolve('data handled');
-  });
-  
+    if (cityData === undefined) {
+      throw new Error('cityData is undefined');
+    }
+    await locationMan.setLocation(cityData);
+    await weatherMan.setFromCityData();
+    weatherMan.getWeather();
+
+    return true;
+  } catch (error) {
+    console.error(error);
+    return false;
+  }
 };
 
 const handlePosition = async (coords) => {
-  const val = await fetchCityName(coords.latitude, coords.longitude);
-  locationMan.setLocation(val);
-  console.log('new sheet', val);
-  // fetchAndRelease();
-  await weatherMan.setFromCityData();
-  return new Promise((resolve) => {
-    resolve('data handled');
-  });
+  try {
+    const val = await fetchCityName(coords.latitude, coords.longitude);
+
+    if (val === undefined) {
+      throw new Error('no name found');
+    }
+    locationMan.setLocation(val);
+    console.log('new sheet', val);
+    await weatherMan.setFromCityData();
+    return true;
+  } catch (error) {
+    console.error(error);
+    return false;
+  }
 };
 
 export {
