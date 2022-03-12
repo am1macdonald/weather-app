@@ -64,30 +64,30 @@ button {
   cursor: pointer;
   font-family: "Poppins", sans-serif;
   border: none;
-  font-size: 1.5rem;
-  line-height: 1.3rem;
+  font-size: min(6vw, 1.5rem);
+  line-height: min(6.2vw, 1.6rem);
   text-align: center;
   background-color: #8bd3dd;
 }
 
 h1 {
-  font-size: 3rem;
-  line-height: 3.5rem;
+  font-size: min(12vw, 3rem);
+  line-height: min(12.2vw, 3.5rem);
   font-weight: 500;
   color: #001858;
 }
 
 h2 {
-  font-size: 2.2rem;
-  line-height: 2.7rem;
+  font-size: min(10vw, 2.2rem);
+  line-height: min(10.3vw, 2.7rem);
   text-align: center;
   color: #001858;
 }
 
 h3 {
   text-align: center;
-  font-size: 1.8rem;
-  line-height: 2rem;
+  font-size: min(8vw, 1.8rem);
+  line-height: min(8.1vw, 2rem);
   color: #001858;
 }
 
@@ -112,7 +112,7 @@ nav div > * {
 }
 
 img {
-  max-height: 3.5rem;
+  max-height: min(12vw, 3.5rem);
   width: auto;
 }
 
@@ -137,13 +137,12 @@ main {
   height: clamp(330px, 500px, 60vh);
   width: clamp(250px, 360px, 90vw);
   padding: 2vmin;
-  padding-bottom: 0;
   margin-top: 2vh;
   margin-bottom: 10vh;
   border: 5px solid #172c66;
   background-color: #f5e9ca;
   color: #001858;
-  box-shadow: 12px 10px 0px #172c66;
+  box-shadow: min(5px, 1vmin) min(9px, 2vmin) 0px #172c66;
 }
 #content-container > * {
   width: 100%;
@@ -200,8 +199,8 @@ main {
 #button-div button {
   width: 40%;
   height: auto;
-  font-size: 1.3rem;
-  line-height: 1.5rem;
+  font-size: min(5vw, 1.3rem);
+  line-height: min(5.1vw, 1.5rem);
   text-align: center;
   background-color: #ff9a41;
   padding: 0.5rem 1rem;
@@ -220,7 +219,7 @@ main {
 #icon-temp div {
   width: 50%;
   text-align: center;
-  font-size: 2.5rem;
+  font-size: min(10vw, 2.5rem);
 }
 #icon-temp #icon-div {
   display: flex;
@@ -253,6 +252,7 @@ main {
 #details div > * {
   width: 50%;
   text-align: center;
+  font-size: min(5vw, 1rem);
 }
 #details div > *:first-child {
   text-align: right;
@@ -309,10 +309,10 @@ form label + input {
   width: 50%;
   height: inherit;
 }
-#bar-menu #metric-button {
+#bar-menu #unit-button {
   border-right: 1px solid #172c66;
 }
-#bar-menu #imperial-button {
+#bar-menu #search-button {
   border-left: 1px solid #172c66;
 }
 
