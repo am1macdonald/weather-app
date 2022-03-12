@@ -283,15 +283,6 @@ const barMenu = () => {
 
   // buttons to change the units
 
-  const metricBtn = document.createElement('button');
-  metricBtn.id = 'metric-button';
-  metricBtn.innerHTML = 'metric';
-  metricBtn.disabled = true;
-
-  const imperialBtn = document.createElement('button');
-  imperialBtn.id = 'imperial-button';
-  imperialBtn.innerHTML = 'imperial';
-
   const unitButton = document.createElement('button');
   unitButton.id = 'unit-button';
   unitButton.innerHTML = 'units';
@@ -301,6 +292,7 @@ const barMenu = () => {
   newSearch.innerHTML = 'search';
 
   container.appendChild(unitButton);
+  container.appendChild(newSearch);
   body.appendChild(container);
 };
 
@@ -317,9 +309,14 @@ const displayManager = (() => {
     document.getElementById('content-container').remove();
     state();
   };
+  const newSearchWindow = () => {
+    content.innerHTML = '';
+    userInput();
+  };
   return {
     update,
     refresh,
+    newSearchWindow,
   };
 })();
 

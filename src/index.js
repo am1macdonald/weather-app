@@ -79,23 +79,18 @@ locateUser();
 (() => {
   barMenu();
 
-  const metricBtn = document.getElementById('metric-button');
+  const unitButton = document.getElementById('unit-button');
 
-  const imperialBtn = document.getElementById('imperial-button');
+  const searchButton = document.getElementById('search-button');
 
-  metricBtn.addEventListener('click', async (e) => {
+  unitButton.addEventListener('click', async () => {
     unitMan.toggle();
     await weatherMan.setFromCityData();
     displayManager.refresh();
-    e.target.disabled = true;
-    imperialBtn.disabled = false;
   });
 
-  imperialBtn.addEventListener('click', async (e) => {
-    unitMan.toggle();
-    await weatherMan.setFromCityData();
-    displayManager.refresh();
-    e.target.disabled = true;
-    metricBtn.disabled = false;
+  searchButton.addEventListener('click', async () => {
+    displayManager.newSearchWindow();
+    formHandler();
   });
 })();
