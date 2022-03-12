@@ -1,23 +1,23 @@
 /* eslint-disable no-prototype-builtins */
-import { add, format, roundToNearestMinutes } from 'date-fns';
-import { fetchCityData, fetchCityName, fetchWeather } from './apiCalls';
+import { add, format, roundToNearestMinutes } from "date-fns";
+import { fetchCityData, fetchCityName, fetchWeather } from "./apiCalls";
 
 const unitMan = (() => {
-  let units = 'metric';
+  let units = "metric";
 
   const unitNames = {
     imperial: {
-      speed: 'mph',
-      temp: 'f',
+      speed: "mph",
+      temp: "f"
     },
     metric: {
-      speed: 'm/s',
-      temp: 'C',
-    },
+      speed: "m/s",
+      temp: "C"
+    }
   };
 
   const toggle = () => {
-    units = units === 'metric' ? 'imperial' : 'metric';
+    units = units === "metric" ? "imperial" : "metric";
     console.log(unitNames[units]);
     // refac => fetchAndRelease();
   };
@@ -26,41 +26,44 @@ const unitMan = (() => {
   return {
     toggle,
     getUnits,
-    getUnitNames,
+    getUnitNames
   };
 })();
 
 const locationMan = (() => {
   const coords = {
-    lat: '',
-    lon: '',
+    lat: "",
+    lon: ""
   };
-  let locationName = '';
+  let locationName = "";
 
   const setLocation = (obj) => {
     const type = typeof obj;
-    if (type !== 'object') {
+    if (type !== "object") {
       console.log(type);
       return;
     }
     // eslint-disable-next-line no-prototype-builtins
-    if (obj.hasOwnProperty('name')) {
+    if (obj.hasOwnProperty("name")) {
       // eslint-disable-next-line no-prototype-builtins
-      if (obj.hasOwnProperty('state')) {
+      if (obj.hasOwnProperty("state")) {
         locationName = `${obj.name}, ${obj.state}`;
       } else {
         locationName = `${obj.name}`;
       }
     }
 
-    if (obj.hasOwnProperty('lat') && obj.hasOwnProperty('lon')) {
+    if (obj.hasOwnProperty("lat") && obj.hasOwnProperty("lon")) {
       coords.lat = obj.lat;
       coords.lon = obj.lon;
-    } else if (obj.hasOwnProperty('latitude') && obj.hasOwnProperty('longitude')) {
+    } else if (
+      obj.hasOwnProperty("latitude")
+      && obj.hasOwnProperty("longitude")
+    ) {
       coords.lat = obj.lat;
       coords.lon = obj.lon;
     }
-    console.log('location set to: ', locationName, ' ', coords);
+    console.log("location set to: ", locationName, " ", coords);
   };
 
   const getName = () => locationName;
@@ -70,7 +73,7 @@ const locationMan = (() => {
   return {
     setLocation,
     getName,
-    getCoords,
+    getCoords
   };
 })();
 
@@ -86,12 +89,12 @@ const weatherMan = (() => {
       humidity: obj.humidity,
       wind: Math.round(obj.wind_speed),
       wind_gust: Math.round(obj.wind_gust),
-      pop: obj.pop,
+      pop: obj.pop
     };
-    if (typeof obj.temp === 'object') {
+    if (typeof obj.temp === "object") {
       summary.temp = {
         high: obj.temp.max,
-        low: obj.temp.min,
+        low: obj.temp.min
       };
       delete summary.feels_like;
     }
@@ -102,8 +105,8 @@ const weatherMan = (() => {
     const days = [];
     for (let i = 0; i < 7; i += 1) {
       days.push({
-        day: format(add(new Date(), { days: i }), 'iiii'),
-        weather: summarize(weatherObj.daily[i]),
+        day: format(add(new Date(), { days: i }), "iiii"),
+        weather: summarize(weatherObj.daily[i])
       });
     }
     console.log(days);
@@ -114,8 +117,13 @@ const weatherMan = (() => {
     const hours = [];
     for (let i = 0; i < 24; i += 1) {
       hours.push({
-        time: format(roundToNearestMinutes(add(new Date(), { hours: i }), { nearestTo: 30 }), 'p'),
-        weather: summarize(weatherObj.hourly[i]),
+        time: format(
+          roundToNearestMinutes(add(new Date(), { hours: i }), {
+            nearestTo: 30
+          }),
+          "p"
+        ),
+        weather: summarize(weatherObj.hourly[i])
       });
     }
     console.log(hours);
@@ -131,8 +139,7 @@ const weatherMan = (() => {
       feels_like: Math.round(current.feels_like),
       humidity: current.humidity,
       wind: Math.round(current.wind_speed),
-      wind_gust: Math.round(current.wind_gust),
-
+      wind_gust: Math.round(current.wind_gust)
     };
     return summary;
   };
@@ -145,8 +152,8 @@ const weatherMan = (() => {
     const units = unitMan.getUnits();
     const coords = locationMan.getCoords();
     weatherObj = await fetchWeather(coords.lat, coords.lon, units);
-    console.log('weatherObj: ', weatherObj);
-    console.log('today: ', today());
+    console.log("weatherObj: ", weatherObj);
+    console.log("today: ", today());
     hourly();
     week();
   };
@@ -158,7 +165,7 @@ const weatherMan = (() => {
     getWeather,
     today,
     week,
-    hourly,
+    hourly
   };
 })();
 
@@ -167,7 +174,7 @@ const handleFormData = async (str) => {
     const cityData = await fetchCityData(str);
 
     if (cityData === undefined) {
-      throw new Error('cityData is undefined');
+      throw new Error("cityData is undefined");
     }
     await locationMan.setLocation(cityData);
     await weatherMan.setFromCityData();
@@ -185,10 +192,10 @@ const handlePosition = async (coords) => {
     const val = await fetchCityName(coords.latitude, coords.longitude);
 
     if (val === undefined) {
-      throw new Error('no name found');
+      throw new Error("no name found");
     }
     locationMan.setLocation(val);
-    console.log('new sheet', val);
+    console.log("new sheet", val);
     await weatherMan.setFromCityData();
     return true;
   } catch (error) {
@@ -198,9 +205,5 @@ const handlePosition = async (coords) => {
 };
 
 export {
-  handlePosition,
-  handleFormData,
-  unitMan,
-  locationMan,
-  weatherMan,
+ handlePosition, handleFormData, unitMan, locationMan, weatherMan
 };
