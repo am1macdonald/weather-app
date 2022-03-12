@@ -292,9 +292,15 @@ const barMenu = () => {
   imperialBtn.id = 'imperial-button';
   imperialBtn.innerHTML = 'imperial';
 
-  container.appendChild(metricBtn);
+  const unitButton = document.createElement('button');
+  unitButton.id = 'unit-button';
+  unitButton.innerHTML = 'units';
 
-  container.appendChild(imperialBtn);
+  const newSearch = document.createElement('button');
+  newSearch.id = 'search-button';
+  newSearch.innerHTML = 'search';
+
+  container.appendChild(unitButton);
   body.appendChild(container);
 };
 
