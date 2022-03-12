@@ -318,7 +318,6 @@ const displayManager = (() => {
 
   const update = (func) => {
     state = func;
-    console.log(state);
   };
   // removes the content from the screen and returns whatever function
   // displayed data last

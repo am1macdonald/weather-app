@@ -94,9 +94,9 @@ const locateUser = () => {
 
   const error = (err) => {
     if (err.code === 1) {
-      console.log("denied location access");
+      console.error("denied location access");
     } else {
-      console.log(err.message);
+      console.error(err.message);
     }
     userInput();
     formHandler();

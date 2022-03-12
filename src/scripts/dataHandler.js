@@ -18,8 +18,6 @@ const unitMan = (() => {
 
   const toggle = () => {
     units = units === "metric" ? "imperial" : "metric";
-    console.log(unitNames[units]);
-    // refac => fetchAndRelease();
   };
   const getUnitNames = () => unitNames[units];
   const getUnits = () => units;
@@ -40,7 +38,6 @@ const locationMan = (() => {
   const setLocation = (obj) => {
     const type = typeof obj;
     if (type !== "object") {
-      console.log(type);
       return;
     }
     // eslint-disable-next-line no-prototype-builtins
@@ -63,7 +60,6 @@ const locationMan = (() => {
       coords.lat = obj.lat;
       coords.lon = obj.lon;
     }
-    console.log("location set to: ", locationName, " ", coords);
   };
 
   const getName = () => locationName;
@@ -109,7 +105,6 @@ const weatherMan = (() => {
         weather: summarize(weatherObj.daily[i])
       });
     }
-    console.log(days);
     return days;
   };
 
@@ -126,7 +121,6 @@ const weatherMan = (() => {
         weather: summarize(weatherObj.hourly[i])
       });
     }
-    console.log(hours);
     return hours;
   };
 
@@ -152,8 +146,6 @@ const weatherMan = (() => {
     const units = unitMan.getUnits();
     const coords = locationMan.getCoords();
     weatherObj = await fetchWeather(coords.lat, coords.lon, units);
-    console.log("weatherObj: ", weatherObj);
-    console.log("today: ", today());
     hourly();
     week();
   };
@@ -195,7 +187,6 @@ const handlePosition = async (coords) => {
       throw new Error("no name found");
     }
     locationMan.setLocation(val);
-    console.log("new sheet", val);
     await weatherMan.setFromCityData();
     return true;
   } catch (error) {
