@@ -21,7 +21,7 @@ const getUserInput = () => {
 
 const fetchCityData = async (inputString) => {
   try {
-    const result = await fetch(`http://api.openweathermap.org/geo/1.0/direct?q=${inputString}&limit=1&appid=${key}`, { mode: 'cors' });
+    const result = await fetch(`https://api.openweathermap.org/geo/1.0/direct?q=${inputString}&limit=1&appid=${key}`, { mode: 'cors' });
     if (!result.ok) {
       throw new Error(`HTTP error: ${result.status}`);
     }
@@ -41,7 +41,7 @@ const fetchCityData = async (inputString) => {
 
 const fetchCityName = async (lat, lon) => {
   try {
-    const result = await fetch(`http://api.openweathermap.org/geo/1.0/reverse?lat=${lat}&lon=${lon}&appid=${key}`, { mode: 'cors' });
+    const result = await fetch(`https://api.openweathermap.org/geo/1.0/reverse?lat=${lat}&lon=${lon}&appid=${key}`, { mode: 'cors' });
     if (!result.ok) {
       throw new Error(`HTTP error: ${result.status}`);
     }
