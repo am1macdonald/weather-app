@@ -22,20 +22,20 @@ button
     font-family: $poppins
     border: none
 
-    font-size: 1.5rem
-    line-height: 1.3rem
+    font-size: min(6vw ,1.5rem)
+    line-height: min(6.2vw , 1.6rem)
     text-align: center
     background-color: $light-blue
 h1
-  font-size: 3rem
-  line-height: 3.5rem
+  font-size: min(12vw ,3rem)
+  line-height: min(12.2vw ,3.5rem)
   font-weight: 500
 
   color: $darker-blue
 
 h2
-  font-size: 2.2rem
-  line-height: 2.7rem
+  font-size: min(10vw ,2.2rem)
+  line-height: min(10.3vw ,2.7rem)
   text-align: center
 
   color: $darker-blue
@@ -43,8 +43,8 @@ h2
 h3
 
   text-align: center
-  font-size: 1.8rem
-  line-height: 2rem
+  font-size: min(8vw ,1.8rem)
+  line-height: min(8.1vw ,2rem)
   color: $darker-blue
 
 body
@@ -70,7 +70,7 @@ nav
     display: inline-block
 
 img
-  max-height: 3.5rem
+  max-height: min(12vw ,3.5rem)
   width: auto
 
 main
@@ -95,7 +95,6 @@ main
   height: clamp(330px, 500px, 60vh)
   width: clamp(250px, 360px, 90vw)
   padding: 2vmin
-  padding-bottom: 0
 
   margin-top: 2vh 
   margin-bottom: 10vh
@@ -107,7 +106,7 @@ main
 
   color: $darker-blue
 
-  box-shadow: 12px 10px 0px $dark-blue
+  box-shadow: min(5px, 1vmin) min(9px, 2vmin) 0px $dark-blue
 
   & > * 
     width: 100%
@@ -120,7 +119,6 @@ main
   height: 85%
 
   ul
-    overflow: scroll
     height: 100%
 
     background-color: $off-white
@@ -173,8 +171,8 @@ main
       width: 40%
       height: auto
 
-      font-size: 1.3rem
-      line-height: 1.5rem
+      font-size: min(5vw ,1.3rem)
+      line-height: min(5.1vw ,1.5rem)
       text-align: center
 
       background-color: $orange
@@ -196,7 +194,7 @@ main
   div
     width: 50%
     text-align: center
-    font-size: 2.5rem
+    font-size: min(10vw ,2.5rem)
   
   #icon-div
     display: flex
@@ -231,6 +229,7 @@ main
     & > *
       width: 50%
       text-align: center
+      font-size: min(5vw ,1rem)
 
       &:first-child
         text-align: right
@@ -273,7 +272,7 @@ form
 
 #bar-menu
   position: fixed
-  bottom: 5vh
+  bottom: min(1rem, 5vh)
 
   left: 50%
   transform: translateX(-50%)
@@ -285,9 +284,6 @@ form
   height: 7vh
   width: clamp(250px, 360px, 90vw)
 
-  margin: 0 auto
-  
-
   border-radius: 2px
 
   background-color: rgba(255, 255, 254, 0.63)
@@ -297,11 +293,10 @@ form
     width: 50%
     height: inherit
 
-  #metric-button
-    border-right: 1px solid $dark-blue
-  #imperial-button
-    
-    border-left: 1px solid $dark-blue
+#unit-button
+  border-right: 1px solid $dark-blue
+#search-button    
+  border-left: 1px solid $dark-blue
     
 
 #bottom-link
@@ -312,4 +307,4 @@ form
 
   a
     text-decoration: none
-    color: $darker-blue
+    color: black

@@ -18,6 +18,11 @@
       {
         "enforceForRenamedProperties": false
       }
-    ]
+    ],
+    "quotes": "off",
+    "indent": "off",
+    "no-use-before-define": "off",
+    "comma-dangle": ["error", "never"],
+    "no-console": "off"
   }
 }
