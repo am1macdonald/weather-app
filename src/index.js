@@ -44,6 +44,20 @@ const formHandler = () => {
   const state = document.getElementById("state");
   const country = document.getElementById("country");
   const submitBtn = document.getElementById("submit-button");
+  const cancelBtn = document.getElementById("cancel-button");
+
+  const clearAndRender = () => {
+    formContainer.remove();
+    displayCity(locationMan.getName());
+    renderToday();
+    document.getElementById("unit-button").disabled = false;
+    document.getElementById("search-button").disabled = false;
+  };
+
+  cancelBtn.addEventListener("click", (e) => {
+    e.preventDefault();
+    clearAndRender();
+  });
 
   submitBtn.addEventListener("click", async (e) => {
     e.preventDefault();
@@ -55,11 +69,7 @@ const formHandler = () => {
           if (!result) {
             throw new Error("bad input");
           }
-          formContainer.remove();
-          displayCity(locationMan.getName());
-          renderToday();
-          document.getElementById("unit-button").disabled = false;
-          document.getElementById("search-button").disabled = false;
+          clearAndRender();
         })
         .catch((error) => {
           console.error(error);
