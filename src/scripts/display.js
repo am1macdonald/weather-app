@@ -9,10 +9,10 @@ const displayCity = (str) => {
   const container = document.createElement("div");
   container.id = "city-container";
 
-  const trunc = str.length > 25 ? `${str.substr(0, 25 - 1)}...` : str;
+  const truncate = str.length > 25 ? `${str.substr(0, 25 - 1)}...` : str;
 
   container.innerHTML = `
-  <h2>${trunc}</h2>
+  <h2>${truncate}</h2>
   `;
 
   content.prepend(container);
@@ -34,7 +34,7 @@ const userInput = () => {
   const container = document.createElement("div");
   container.id = "search-window";
   container.id = "content-container";
-  container.innerHTML = `
+  container.insertAdjacentHTML("beforeend", `
 
   <h3>Find Your City</h3>
   <span id="incorrect-input">Try Again!</span>
@@ -56,9 +56,12 @@ const userInput = () => {
     </div>
     <div id="button-div">
       <button id="submit-button" type="submit" form="form">search</button>
+      <button id="cancel-button" type="cancel" form="form">cancel</button>
+
     </div>
+    
   </form>
-  `;
+  `);
 
   content.appendChild(container);
 };
