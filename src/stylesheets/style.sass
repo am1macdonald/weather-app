@@ -52,7 +52,6 @@ body
   max-height: 100vh
   background-color: $off-white
   color: $orange
-  overflow: hidden
 
   font-family: $poppins
 
@@ -272,7 +271,7 @@ form
 
 #bar-menu
   position: fixed
-  bottom: min(1rem, 5vh)
+  bottom: min(1.5rem, 5vh)
 
   left: 50%
   transform: translateX(-50%)
@@ -281,7 +280,7 @@ form
   justify-content: space-around
   align-items: center
 
-  height: 7vh
+  max-height: 7vh
   width: clamp(250px, 360px, 90vw)
 
   border-radius: 2px
@@ -291,7 +290,7 @@ form
 
   button
     width: 50%
-    height: inherit
+    padding: 1.5vh 1vw
 
 #unit-button
   border-right: 1px solid $dark-blue
